@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <title>Chat</title>
+
+<link rel="https://fonts.google.com/?selection.family=Roboto">
+<style>
+	body, html {
+		margin: 0;
+		color: #555;
+		font: 100% "Roboto";
+	}
+	
+	#app{
+		width: 100%;
+	}
+	.app__list{
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	.app__list-item{
+		padding: 10px;
+		font-size: .9em;
+	}
+	.app__list-item:nth-child(odd){
+		background-color: #f5f5f5;
+	}
+	.chat__input{
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		padding: 10px;
+		border: 3px solid #f5f5f5;
+		font-size: .9em;
+	}
+	
+</style>
+
+
+</head>
+<body>
+	<div id="app">
+<!--
+	<div class="app">
+-->
+		
+		<ul class="app__list">
+			<li class="app__list-item"
+				v-for="message in messages"
+			>{{ message }}</li>
+		</ul>
+<!--
+		<p>{{ message }}</p>
+-->
+		<input class="chat__input" type="text" id="m_input"
+			v-model="message"
+			v-on:keydown="send"
+		
+		>
+		
+		
+<!--
+		<div id="" class="jumbotron">
+-->
+<!--
+			<h1>Морской бой</h1>
+			<p>С кем будешь играть?</p>
+-->
+
+<!--
+			<div class="m_desc">
+				<div>
+					<input type="radio"  id="customRadio" name="example" value="comp">
+					<label class="" for="customRadio">С компьютером</label>
+				</div>
+				<div>
+					<input type="radio" id="customRadio2" name="example" value="man">
+					<label class="" for="customRadio2">С человеком</label>
+				</div>
+			</div> 
+			<button class="btn btn-info" 
+				onclick="m_play()"
+			>Играть</button>
+-->
+<!--
+		</div>
+-->
+
+	</div>
+
+<!--
+Не удается подключить, может как с серверА?
+через express подключился!?
+-->
+
+<!--
+подключаем socket.io проверив предварительно так
+http://localhost:3000/socket.io/socket.io.js
+
+а как это произошло ??? проверь здесь
+https://www.youtube.com/watch?v=A4iBWc5GWLI&list=PLD-piGJ3Dtl31YuO6vN_ptEZ8fG2TB2X9
+
+а то ниже говорят закачивай чего-то из инета
+https://www.youtube.com/watch?v=cUlw0YbCNzo
+-->
+<script src="socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
+
+<!--
+мой скрипт, уже работает
+-->
+<script src="script.js"></script>
+
+    <script>
+		const socket = io();
+		//~ socket.on('connect', function(){
+			//~ console.log('Client connect.');
+		//~ });
+		new Vue({
+			el:"#app",// в при мерах класс, но и так работает!!
+			//~ el:".app",// в при мерах класс, но и так работает!!
+			data: {
+				message: "Hi! I'm message!",
+				messages: [
+				"Hi",
+				"How I you?"
+				]
+			},
+			methods: {
+				// !!! Блин, новый стандарт !!! Осторожно с this !!!
+				//~ send: (e) => {
+				send: function (e) {
+					
+					if(e.keyCode !== 13){
+						return;
+					}
+					//~ console.log("111111111111111");
+					//~ console.log(e);
+					//~ console.log(this);
+					//~ console.log(message);
+					//~ console.log(this.message);
+					//~ console.log(this.messages);
+					//~ console.log("22222222222222222");
+					
+					//~ this.messages.push(this.message);
+					socket.emit("message.send", this.message);
+					this.message="";
+				}
+			},
+			//~ ready: function () { - depricated!
+			mounted: function () { 
+			//~ mounted: () => { 
+			console.log("3333333333333");
+				console.log(this);
+				console.log("This is a this");
+				//~ bind не проканал - сделаем так
+				var sock = this;
+				//~ socket.on('connect', function(message){ 
+				socket.on('message', function(message){ 
+					//~ var x = document.getElementById("m_input").value;
+					//~ console.log(document.getElementById("app"));
+					console.log(sock);
+					console.log(message);
+					// в массив добавим сообщение
+					sock.messages.push(message);
+					console.log(sock.messages);
+					console.log('Client connect.'); 
+				});
+				//~ sock.bind(this);
+				//~ .bind(this); 
+				console.log("4444444444444444");
+			}
+		});
+		
+		
+		
+		//~ const socket = io()
+		//~ socket.on('connect', () => {
+			//~ console.log("Client connect");
+		//~ })
+		
+		
+		//~ alert("Js!")
+		//~ function m_play(){
+		//~ var id = l_get_id();
+			//~ console.log("Start");
+		//~ }
+		
+/**
+ * Выдаст id
+ * */
+
+/*
+function l_get_id(){
+	var ss = Date.now()/1000 | 0;
+	//~ console.log(typeof(ss));
+	//~ console.log("ss=" + ss);
+	//~ ?? чисоа не совпадают ??
+	var t = ss/10008;
+	//~ console.log(t);
+	var t = t | 0;
+	//~ console.log(t);
+	t = (ss /10008 - t) * 10000 | 0;
+	console.log(t);
+	return t;
+}
+	*/	
+    </script>
+	
+</body>
+</html>
+

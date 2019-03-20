@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <title>NodeJS Chat</title>
+
+</head>
+<body>
+	<div id="app">
+		<div id="" class="jumbotron">
+			<h1>Морской бой</h1>
+			<p>С кем будешь играть?</p>
+
+			<div class="m_desc">
+				<div>
+					<input type="radio"  id="customRadio" name="example" value="comp">
+					<label class="" for="customRadio">С компьютером</label>
+				</div>
+				<div>
+					<input type="radio" id="customRadio2" name="example" value="man">
+					<label class="" for="customRadio2">С человеком</label>
+				</div>
+			</div> 
+			<button class="btn btn-info" 
+				onclick="m_play()"
+			>Играть</button>
+		</div>
+
+	</div>
+
+<!--
+Не удается подключить, может как с серверА?
+через express подключился!?
+-->
+
+<!--
+подключаем socket.io проверив предварительно так
+http://localhost:3000/socket.io/socket.io.js
+
+а как это произошло ??? проверь здесь
+https://www.youtube.com/watch?v=A4iBWc5GWLI&list=PLD-piGJ3Dtl31YuO6vN_ptEZ8fG2TB2X9
+
+а то ниже говорят закачивай чего-то из инета
+https://www.youtube.com/watch?v=cUlw0YbCNzo
+-->
+<script src="socket.io/socket.io.js"></script>
+<!--
+мой скрипт, уже работает
+-->
+<script src="script.js"></script>
+
+    <script>
+		const socket = io()
+		socket.on('connect', () => {
+			console.log("Client connect");
+		})
+		
+		
+		
+		
+		
+		//~ alert("Js!")
+		function m_play(){
+		var id = l_get_id();
+			console.log("Start");
+		}
+		
+/**
+ * Выдаст id
+ * */
+
+function l_get_id(){
+	var ss = Date.now()/1000 | 0;
+	//~ console.log(typeof(ss));
+	//~ console.log("ss=" + ss);
+	//~ ?? чисоа не совпадают ??
+	var t = ss/10008;
+	//~ console.log(t);
+	var t = t | 0;
+	//~ console.log(t);
+	t = (ss /10008 - t) * 10000 | 0;
+	console.log(t);
+	return t;
+}
+		
+    </script>
+	
+</body>
+</html>
+

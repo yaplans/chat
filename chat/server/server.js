@@ -4,6 +4,8 @@
 //~ 2. express.static
 //~ 3. ??? не понятно как сервер находит index.html
 
+
+
 //~ так покороче, но понадобилась константа express
 //~ var app = require('express')();
 const express = require('express');
@@ -19,7 +21,7 @@ var path = require('path');
 const publicPath = path.join(__dirname + "/../public");
 app.use(express.static(publicPath));
 
-//~ не требуется, т.к. ??? не понятно как сервер находит index.html
+//~ не требуется, т.к. ??? ... но, не понятно как сервер находит index.html???
 // выдача в браузер
 //~ app.get('/', function(req, res){
   //~ res.send('<h1>Hello world</h1>');
@@ -71,8 +73,8 @@ io.on('message.send', function(message){
 
 
 const port = process.env.PORT || 3000
-
-http.listen(port, function(){
+const host = process.env.HOST || "0.0.0.0"
+http.listen(port, host, function(){
   //~ console.log('listening on *:3000');
   console.log(`listening on *:${port}`);
 });

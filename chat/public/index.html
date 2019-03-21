@@ -44,12 +44,16 @@
 	<div id="app">
 <!--
 	<div class="app">
+
+	v-if:class="alert alert-info"
+	v-bind:class="{alert-info: message.whom }"
 -->
 		
 		<ul class="app__list">
 			<li class="app__list-item"
+				v-bind:class="{alert-info: isMy }"
 				v-for="message in messages"
-			>{{ message }}</li>
+			>{{ message.text }}</li>
 		</ul>
 <!--
 		<p>{{ message }}</p>
@@ -123,54 +127,42 @@ https://www.youtube.com/watch?v=cUlw0YbCNzo
 			//~ el:".app",// в при мерах класс, но и так работает!!
 			data: {
 				message: "Hi! I'm message!",
-				messages: [
-				"Hi",
-				"How I you?"
-				]
+				messages: [ {text: "", whom: ""}
+				//~ "Hi",
+				//~ "How I you?"
+				],
+				isMy: false
 			},
 			methods: {
 				// !!! Блин, новый стандарт !!! Осторожно с this !!!
 				//~ send: (e) => {
 				send: function (e) {
-					
+					//~ console.log("3312121");
 					if(e.keyCode !== 13){
 						return;
 					}
-					//~ console.log("111111111111111");
-					//~ console.log(e);
-					//~ console.log(this);
-					//~ console.log(message);
-					//~ console.log(this.message);
-					//~ console.log(this.messages);
-					//~ console.log("22222222222222222");
+					//~ console.log("3333333333333");
 					
-					//~ this.messages.push(this.message);
+					isMy = true;
+					this.messages.push({text:this.message, whom:true});
 					socket.emit("message.send", this.message);
+					//~ isMy = false;
 					this.message="";
 				}
 			},
 			//~ ready: function () { - depricated!
 			mounted: function () { 
 			//~ mounted: () => { 
-			console.log("3333333333333");
-				console.log(this);
-				console.log("This is a this");
-				//~ bind не проканал - сделаем так
+			//~ console.log("3333333333333");
+				//~ console.log(this);
+				//~ console.log("This is a this");
+				// bind не проканал - сделаем так
 				var sock = this;
 				//~ socket.on('connect', function(message){ 
 				socket.on('message', function(message){ 
-					//~ var x = document.getElementById("m_input").value;
-					//~ console.log(document.getElementById("app"));
-					console.log(sock);
-					console.log(message);
 					// в массив добавим сообщение
-					sock.messages.push(message);
-					console.log(sock.messages);
-					console.log('Client connect.'); 
+					sock.messages.push({text:message, whom:false});
 				});
-				//~ sock.bind(this);
-				//~ .bind(this); 
-				console.log("4444444444444444");
 			}
 		});
 		

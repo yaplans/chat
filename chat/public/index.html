@@ -3,237 +3,30 @@
 <head>
 <meta charset="utf-8">
   <title>Chat</title>
-
+<!--
 <link rel="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <link rel="https://fonts.google.com/?selection.family=Roboto">
-<style>
-	
-	
-	.panel {
-  width: 300px;
-  height: 200px;
-  
-  background: #fff;
-  
-  border: 1px solid #cecece;
-  border-radius: 5px;
-  
-  position: absolute;
-}
-  
-  
-.container {
-  width: 90%;
-  height: 90%;
-  
-  border: 1px solid #cecece;
-  border-radius: 5px;
-  
-  display: flex;
-  
-  justify-content: center;
-  align-items: center;
-  
-  overflow: hidden;
-  
-  position: relative;
-  
-  transform: translate(-50%, -50%);
-  
-  top: 50%;
-  left: 50%;
-}
-  
-img {
-  max-width: none;
-  
-  min-width: auto;
-  min-height: auto;
-  
-  height: 100%;
-  
-  position: absolute;
-  
-  top: 50%;
-  left: 50%;
-  
-  transform: translate(-50%, -50%);
-}
-	
-	
-	
-/*	
-
-	body, html {
-		margin: 10;
-		color: #555;
-		font: 100% "Roboto";
-		border: 3px;
-	}
-	
-	#app{
-		width: 100%;
-	}
-	.app__list{
-		list-style-type: none;
-		padding: 0;
-		margin: 0;
-	}
-	.app__list-item{
-		padding: 10px;
-		font-size: .9em;
-	}
-	.app__list_my{
-		background-color: yellow;
-		color: black;
-		text-align: right;
-	}
-	.app__list-item:nth-child(odd){
-		background-color: #f5f5f5;
-	}
-	
-	.chat__input{
-		position: fixed;
-		bottom: 0;
-/*		
-		width: 100%;
-*/
-		width: auto;
-		padding: 10px;
-		border: 3px solid #f5f5f5;
-		font-size: .9em;
-	}
-
-		
-
-*/	
-
-	body {
-		margin: 10;
-		padding: 10px;
-		color: #555;
-		font: 100% "Roboto";
-		border: 2px solid cyan;
-		
-
-/*для того, чтобы внутренние объекты не вылезали*/		
-/*
-
-    background-size: cover;
-
-    width: x;
-    height: y;
-	*/	
-	}
 
 
-	.app__list_my{
-		background-color: yellow;
-		color: black;
-		text-align: right;
-	}
+шрифт-->
 
-/*
-		position: fixed;
-		bottom: 0;
-		border: 3px solid #f5f5f5;
-		font-size: .9em;
-
-*/
-	.chat__input{
-		padding: 10px;
-		object-fit: cover;
-		box-shadow: 0 3px 20px red;
-		max-width: none;
-		min-width: auto;
-		min-height: auto;
-		height: 100%;
-		width: 50%;
-		position: relative;
-		top: 50%;
-		left: 20%;
-		
-	}
-	#app {
-		background: #D9CCBD;
-		position: relative;
-		
-		justify-content: center;
-		align-items: center;
-	}
-/*
-	DIV:before  {
-    content: "Hello";
-    
-
-	}
-*/
-	
-</style>
-
-
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!--
-<div class="panel">
-  <div class="container">
-    <img src="https://upload.wikimedia.org/wikipedia/en/4/4e/Steamboat-willie.jpg" alt="">
-  </div>
-</div>
--->
 	
 	<div id="app">
-<!--
-	<div class="app">
-
-	v-if:class="alert alert-info"
-	v-bind:class="{alert-info: message.whom }"
--->
-		
 		<ul class="app__list">
 			<li class="app__list-item"
 				v-for="message in messages"
 				v-bind:class="{'app__list_my': message.whom }"
 			>{{ message.text }} {{ message.whom }}</li>
 		</ul>
-<!--
-		<p>{{ message }}</p>
--->
 		<input class="chat__input" type="text" id="m_input"
 			v-model="message"
 			v-on:keydown="send"
-		
 		>
-		
-		
-<!--
-		<div id="" class="jumbotron">
--->
-<!--
-			<h1>Морской бой</h1>
-			<p>С кем будешь играть?</p>
--->
-
-<!--
-			<div class="m_desc">
-				<div>
-					<input type="radio"  id="customRadio" name="example" value="comp">
-					<label class="" for="customRadio">С компьютером</label>
-				</div>
-				<div>
-					<input type="radio" id="customRadio2" name="example" value="man">
-					<label class="" for="customRadio2">С человеком</label>
-				</div>
-			</div> 
-			<button class="btn btn-info" 
-				onclick="m_play()"
-			>Играть</button>
--->
-<!--
-		</div>
--->
 
 	</div>
 
@@ -262,30 +55,21 @@ https://www.youtube.com/watch?v=cUlw0YbCNzo
 
     <script>
 		const socket = io();
-		//~ socket.on('connect', function(){
-			//~ console.log('Client connect.');
-		//~ });
 		new Vue({
 			el:"#app",// в при мерах класс, но и так работает!!
 			//~ el:".app",// в при мерах класс, но и так работает!!
 			data: {
 				message: "Hi! I'm message!",
-				messages: [ {text: "", whom: ""}
-				//~ "Hi",
-				//~ "How I you?"
-				],
+				messages: [ {text: "", whom: ""}],
 				isMy: false
 			},
 			methods: {
 				// !!! Блин, новый стандарт !!! Осторожно с this !!!
 				//~ send: (e) => {
 				send: function (e) {
-					//~ console.log("3312121");
 					if(e.keyCode !== 13){
 						return;
 					}
-					//~ console.log("3333333333333");
-					
 					this.isMy = true;
 					this.messages.push({text:this.message, whom:true});
 					socket.emit("message.send", this.message);
@@ -309,39 +93,7 @@ https://www.youtube.com/watch?v=cUlw0YbCNzo
 			}
 		});
 		
-		
-		
-		//~ const socket = io()
-		//~ socket.on('connect', () => {
-			//~ console.log("Client connect");
-		//~ })
-		
-		
-		//~ alert("Js!")
-		//~ function m_play(){
-		//~ var id = l_get_id();
-			//~ console.log("Start");
-		//~ }
-		
-/**
- * Выдаст id
- * */
 
-/*
-function l_get_id(){
-	var ss = Date.now()/1000 | 0;
-	//~ console.log(typeof(ss));
-	//~ console.log("ss=" + ss);
-	//~ ?? чисоа не совпадают ??
-	var t = ss/10008;
-	//~ console.log(t);
-	var t = t | 0;
-	//~ console.log(t);
-	t = (ss /10008 - t) * 10000 | 0;
-	console.log(t);
-	return t;
-}
-	*/	
     </script>
 	
 </body>

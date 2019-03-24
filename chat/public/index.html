@@ -17,6 +17,7 @@
 
 	
 	<div id="app">
+		<h2>Чатик - Беседка</h2>
 		<ul class="app__list">
 			<li class="app__list-item"
 				v-for="message in messages"
@@ -62,6 +63,7 @@ https://www.youtube.com/watch?v=cUlw0YbCNzo
 				message: "Hi! I'm message!",
 				messages: [ {text: "", whom: ""}],
 				isMy: false
+				//~ ,show: true
 			},
 			methods: {
 				// !!! Блин, новый стандарт !!! Осторожно с this !!!
@@ -89,6 +91,7 @@ https://www.youtube.com/watch?v=cUlw0YbCNzo
 				socket.on('message', function(message){ 
 					// в массив добавим сообщение
 					sock.messages.push({text:message, whom:false});
+					//~ sock.show = true;
 				});
 			}
 		});

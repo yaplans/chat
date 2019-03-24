@@ -1,102 +1,48 @@
 /*------------------------------------*/
 
 
+@media all and (max-width: 1240px) {
 
-
-
-
-/*
-
-
-	body {
-
-		margin: 10;
-		padding: 10px;
-		color: #555;
-		font: 100% "Roboto";
-		border: 2px solid cyan;
-
-	}
-
-
-
-
-
-
-
-
-
-
-	#app {
-		background: #D9CCBD;
-		position: relative;
-		
-		justify-content: center;
-		align-items: center;
-	}
-
-
-
-
-
-
-	.chat__input{
-		padding: 10px;
-		object-fit: cover;
-		box-shadow: 0 3px 20px red;
-		max-width: none;
-		min-width: auto;
-		min-height: auto;
-		height: 100%;
-		width: 50%;
-		position: relative;
-		top: 50%;
-		left: 20%;
-		
-	}
-
-
-*/
-
-
-
-
-
-
-
-
-
-#app {
-	display: grid;
-	grid-template-rows: 100px minmax(100px, auto) 50px;
+* {
+	font-size: 48px;
 }
 
 
+}
+
+
+
 body {
-	/*background: #A8F7CF;*/
 	background: #F7EBA8;
 	padding: 20px;
 	border: 10px solid #27A150;
 	border-radius: 10px;
 }
 
-.app__list{
-/*		background: #F7D3A8;
-background: #FFA500;
-background: #837968;
-margin-left: 20px; 
-*/
-}
-.app__list{
-/*	background: #FFA500;
-background: #837968;*/
 
+#app {
+	display: grid;
+	grid-template-rows: 60px minmax(100px, 500px) 60px ;
+	grid-gap: 30px;
+}
+/*
+ * 
+	grid-template-rows: 100px minmax(100px, auto) 70% 30px ;
+	align-content: end;
+ * 
+ * */
+
+
+
+.app__list{
+	list-style-type: none;
+	padding-left: 0;
+	margin: 0;
+	overflow: scroll;
 }
 
 
 .app__list-item{
-	/*background: #F0976F;
-	*/
 	background: #EE8455;
 	text-align: left;
 	padding-left: 20px; 
@@ -104,8 +50,11 @@ background: #837968;*/
 }
 
 .app__list_my{
+/*
 	background: #F0976F;
-/*background: #837968;*/
+	*/
+	background: #FCB190;
+	
 	text-align: right;
 	padding-right: 20px; 
 	margin: 10px
@@ -113,9 +62,33 @@ background: #837968;*/
 
 
 
-.app__list{
-	list-style-type: none;
-	text-align: left;
-	padding-left: 0;
-	margin: 0;
+	
+
+	.chat__input{
+		padding: 10px;
+		box-shadow: 0 3px 20px red;
+		
+	}
+
+
+
+
+/* Анимации появления и исчезновения могут иметь */
+/* различные продолжительности и динамику.       */
+/*
+.slide-fade-enter-active {
+  transition: all .3s ease;
 }
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+*/
+/* .slide-fade-leave-active до версии 2.1.8 */ 
+
+/*
+{
+  transform: translateX(10px);
+  opacity: 0;
+}
+*/

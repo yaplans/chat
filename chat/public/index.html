@@ -73,7 +73,8 @@ https://www.youtube.com/watch?v=cUlw0YbCNzo
 						return;
 					}
 					this.isMy = true;
-					this.messages.push({text:this.message, whom:true});
+					//this.messages.push({text:this.message, whom:true});
+					this.messages.unshift({text:this.message, whom:true});
 					socket.emit("message.send", this.message);
 					this.isMy = false;
 					this.message="";
@@ -90,7 +91,8 @@ https://www.youtube.com/watch?v=cUlw0YbCNzo
 				//~ socket.on('connect', function(message){ 
 				socket.on('message', function(message){ 
 					// в массив добавим сообщение
-					sock.messages.push({text:message, whom:false});
+					//sock.messages.push({text:message, whom:false});
+					sock.messages.unshift({text:message, whom:false});
 					//~ sock.show = true;
 				});
 			}

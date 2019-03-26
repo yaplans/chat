@@ -71,6 +71,16 @@ body {
 	}
 
 
+h2{
+	margin: 0px;
+
+}
+
+#page_title {
+	border: 3px solid #27A150;
+	border-radius: 10px;
+	text-align: center;
+}
 
 
 /* Анимации появления и исчезновения могут иметь */

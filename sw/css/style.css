@@ -1,0 +1,14 @@
+/*<style>
+ */
+	.m_desc{
+		background: #f0f0f0; /* Цвет фона */
+/*    border: 1px solid black;*/ /* Параметры рамки */
+		padding: 15px; /* Поля вокруг текста */
+		margin-bottom: 10px; /* Отступ снизу */
+		border: solid;
+		border-radius: 40px 10px;
+	}
+	
+/*	
+</style>
+*/

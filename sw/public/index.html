@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-  <title>My app</title>
+  <title>SW</title>
 <!--
   <script src="https://unpkg.com/vue"></script>
 -->
@@ -13,17 +13,11 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<style>
-	.m_desc{
-		background: #f0f0f0; /* Цвет фона */
-/*    border: 1px solid black;*/ /* Параметры рамки */
-		padding: 15px; /* Поля вокруг текста */
-		margin-bottom: 10px; /* Отступ снизу */
-		border: solid;
-		border-radius: 40px 10px;
-	}
-</style>
+<!--mine-->
+<!--
+<link rel="stylesheet" href="../css/style.css">
+-->
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<div id="app">
@@ -47,55 +41,14 @@
 		</div>
 
 	</div>
-<!--
-    <script>
-		//~ alert("Js!")
-		function m_play(){
-		//~ var id = l_get_id();
-			console.log("Start");
-		}
-    </script>
--->
-
-
-<!--
-Не удается подключить, может как с серверА?
--->
 
 <!--
 <script src="http://localhost:8080/api.js"></script>
 -->
-<script src="script.js"></script>
-<!--
-	<script src="api.js"></script>
--->
-    <script>
-		//~ alert("Js!")
-		function m_play(){
-		var id = l_get_id();
-			console.log("Start");
-		}
-		
-/**
- * Выдаст id
- * */
+	<script src="socket.io/socket.io.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
 
-function l_get_id(){
-	var ss = Date.now()/1000 | 0;
-	//~ console.log(typeof(ss));
-	//~ console.log("ss=" + ss);
-	//~ ?? чисоа не совпадают ??
-	var t = ss/10008;
-	//~ console.log(t);
-	var t = t | 0;
-	//~ console.log(t);
-	t = (ss /10008 - t) * 10000 | 0;
-	console.log(t);
-	return t;
-}
-		
-    </script>
-	
+	<script src="script.js"></script>
 </body>
 </html>
 

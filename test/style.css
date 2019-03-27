@@ -1,0 +1,41 @@
+body {
+	background: #5CD25C;
+}
+
+#block2{
+	background: #F8F747;
+
+}
+
+/*
+.wrapper {
+	display: grid;
+	grid-columns:
+}
+*/
+	
+.wrapper {
+    display: grid;
+/*
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+*/
+
+    grid-template-columns: 15% 30%;
+    grid-template-rows: 100px calc(100vh-200px) 100px;
+	min-height:
+ }
+	
+.item1 {
+/*
+    grid-column-start: 1;
+    grid-column-end: 4;
+*/
+    grid-column: 1 / 4;
+    
+}
+
+div{
+	border: 3px black solid;
+}
+

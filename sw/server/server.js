@@ -21,6 +21,7 @@ io.on('connection', function(socket){
 	// на установленном сокете создаем событие
 	//~ 	socket.emit('message', 'User ' + user + ' connected');
 	io.emit('message', 'User ' + user + ' connected');
+	io.emit('user_id', user);
   
   socket.on('message.send', function(message){
     console.log('message.send = ' + message);

@@ -5,6 +5,44 @@ const socket = io();
 console.log(socket);
 
 
+const vm = new Vue({
+	el: "#app",
+	data: {
+		my_id: 0,
+		players: []
+	}
+});
+
+console.log(vm.my_id);
+
+socket.on("message", function(mess){
+	
+	console.log(mess);
+	});
+
+socket.on("user_id", function(mess){
+	if(vm.my_id===0){
+		vm.my_id=mess;
+	} else {
+		vm.players.push(mess);
+	}
+	console.log(mess);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function m_play(){
 	console.log("m_play");
 	//~ alert("Js!")

@@ -37,8 +37,29 @@
 			</div> 
 			<button class="btn btn-info" 
 				onclick="m_play()"
-			>Играть</button>
+			>Играть!!!</button>
 		</div>
+
+<p>Мой id={{ my_id }}</p>
+
+<ul>
+
+<!--v-bind:class="{'app__list_my': message.whom }"-->
+
+
+	<li class="app__list-item"
+		v-for="player in players"
+		
+	>{{ player }}</li>
+
+</ul>
+
+
+<p>ход</p>
+	<button class="btn btn-info" 
+		onclick="m_play()"
+	>Играть</button>
+
 
 	</div>
 

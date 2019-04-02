@@ -1,14 +1,67 @@
-#grid { 
-  display: grid;
+
 /*
   display: inline-grid
-*/
-  grid-template-rows: 1fr 3fr 1fr;
-  grid-template-columns: 2fr 1fr 1fr;
+
+
+
   grid-gap: 5vw;
-  height: 100vh;
-  margin: 0;
+grid-template-rows: 1fr 3fr 1fr;
+
+
+
+
+
+
+  display: grid;
+	
+	grid-template-columns: 2fr 1fr 1fr;
+	grid-template-rows: 60px 1fr 60px 1fr; 
+	grid-template-areas: 	
+	"aid1 aid1 aid1"
+	"aid2 aid3 aid4";
+
+	grid-gap: 10px;
+	height: 100vh;
+	margin: 0;
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+*/
+
+#grid { 
+
+	display: grid;
+	grid-template-areas: 	
+	"aid1 aid1 aid1"
+	"aid2 aid3 aid4";
+
+	grid-template-rows: 60px 1fr 60px;
+	grid-template-columns: 20% 1fr 15%;
+	grid-gap: 10px;
+
+	height: 100vh;
+	margin: 0;
+
   }
+  
+#id1 {
+	grid-area: aid1;
+}  
+#id2 {
+	grid-area: aid2;
+}  
+#id3 {
+	grid-area: aid3;
+}  
+#id4 {
+	grid-area: aid4;
+}  
+  
+  
+  
 #grid > div {
   font-size: 5vh;
   padding: .5em;

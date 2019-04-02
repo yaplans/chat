@@ -12,3 +12,10 @@
 /*	
 </style>
 */
+
+#my_name{
+	border: solid;
+	border-radius: 10px;
+	padding: 20px;
+	width: fit-content;
+}

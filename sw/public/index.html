@@ -40,12 +40,32 @@
 			>Играть!!!</button>
 		</div>
 
+
+
+
+<!--
 <p>Мой id={{ my_id }}</p>
+-->
+<div>
+<p>Мое имя: {{ my_name }}</p>
+	<button class="btn btn-info" 
+		onclick="vm.bool_name=true;"
+	>Редактировать</button>
+</div>
+
+<div id="my_name"
+	v-if="bool_name"
+>
+	<label class="" for="textName">Твое имя</label>
+	<input type="text" id="textName" name="name" value=""/>
+	<button class="btn btn-info" 
+		onclick="b_name()"
+	>Сохранить</button>
+</div>
 
 <ul>
 
 <!--v-bind:class="{'app__list_my': message.whom }"-->
-
 
 	<li class="app__list-item"
 		v-for="player in players"
@@ -55,10 +75,7 @@
 </ul>
 
 
-<p>ход</p>
-	<button class="btn btn-info" 
-		onclick="m_play()"
-	>Играть</button>
+
 
 
 	</div>

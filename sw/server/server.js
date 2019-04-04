@@ -18,32 +18,33 @@ io.on('connection', function(socket){
 	// с помощью socket
 	var user = Date.now();
 	console.log('a user connected id=' + `${user}`);
+	console.log(socket);
 	// на установленном сокете создаем событие
 	//~ 	socket.emit('message', 'User ' + user + ' connected');
 	io.emit('message', 'User ' + user + ' connected');
 	io.emit('user_id', user);
   
   socket.on('message.send', function(message){
-    console.log('message.send = ' + message);
+    console.log('socket.on message.send === ' + message);
     // всем отправим
     //~ io.emit('message', message);
     // отправим назад
     //~ socket.emit('message', message);
     //~ всем кроме отправителя
-    socket.broadcast.emit('message', user + ": " + message);
+    socket.broadcast.emit('socket.broadcast message', user + ": " + message);
   }); 
   
-  
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
+  socket.on('disconnect', function(message){
+    console.log('user disconnected' + message);
   });
 });
 
 io.on('message.send', function(message){
-	console.log('message.send');
+	console.log('io.on===message.send');
 });
 
 
+//~ запускаем сервер
 const port = process.env.PORT || 3000
 const host = process.env.HOST || "0.0.0.0"
 http.listen(port, host, function(){

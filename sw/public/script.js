@@ -10,10 +10,31 @@ function m_log(x){
 	}
 }
 
+function m_play(){
+	m_log("m_play");
+	//~ alert("Js!")
+	//~ var id = l_get_id();
+
+	var m_check = document.getElementById("customRadio");
+	var m_check2 = document.getElementById("customRadio2");
+	var m_ret = "";	
+	if(m_check.checked){
+		m_ret = m_check.value;
+	}
+	if(m_check2.checked){
+		m_ret =  m_check2.value;
+	}
+	return alert(m_ret);
+}
+
+/**
+ * Прога пошла
+ */
+
+
 
 const socket = io();
 m_log(socket);
-
 
 const vm = new Vue({
 	el: "#app",
@@ -27,49 +48,37 @@ const vm = new Vue({
 
 // Если уже представились
 var v_my_name = localStorage.getItem('my_name');
-m_log(v_my_name);
+m_log("v_my_name="+v_my_name);
 
 if(v_my_name!==null){
-	vm.my_name = v_my_name;	
-	vm.bool_name = false;	
+	vm.my_name = v_my_name;
+	vm.bool_name = false;
 }
-
 
 m_log(vm.my_id);
 
 socket.on("message", function(mess){
-	
-	m_log(mess);
-	});
+	m_log("socket.on message === "+ mess);
+});
 
 socket.on("user_id", function(mess){
+	m_log("socket.on user_id === "+ mess);
 	if(vm.my_id===0){
 		vm.my_id=mess;
 	} else {
 		vm.players.push(mess);
 	}
-	m_log(mess);
 });
 
 
-
-
 function b_name(){
-	//~ m_log("b_name");
 	var l_name = document.getElementById("textName").value;
-	//~ m_log(l_name);
 	localStorage.setItem('my_name', l_name);
 	vm.my_name = l_name;		
 	vm.bool_name = false;
 }
 
 
-
-function m_play(){
-	m_log("m_play");
-	//~ alert("Js!")
-	var id = l_get_id();
-}
 		
 /**
  * Выдаст id

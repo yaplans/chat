@@ -36,6 +36,9 @@ function m_play(){
 const socket = io();
 m_log(socket);
 
+
+
+
 const vm = new Vue({
 	el: "#app",
 	data: {
@@ -56,6 +59,17 @@ if(v_my_name!==null){
 }
 
 m_log(vm.my_id);
+
+socket.emit("m_login",vm.my_name);
+
+
+
+
+
+socket.on("user_name", function(mess){
+	m_log("socket.on user_name === "+ mess);
+});
+
 
 socket.on("message", function(mess){
 	m_log("socket.on message === "+ mess);

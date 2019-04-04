@@ -18,11 +18,16 @@ io.on('connection', function(socket){
 	// с помощью socket
 	var user = Date.now();
 	console.log('a user connected id=' + `${user}`);
-	console.log(socket);
+	//~ console.log(socket);
 	// на установленном сокете создаем событие
 	//~ 	socket.emit('message', 'User ' + user + ' connected');
 	io.emit('message', 'User ' + user + ' connected');
 	io.emit('user_id', user);
+  
+  socket.on('m_login', function(message){
+	console.log('socket.on m_login === ' + message);
+	io.emit('user_name', message);
+  });
   
   socket.on('message.send', function(message){
     console.log('socket.on message.send === ' + message);

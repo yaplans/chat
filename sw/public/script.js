@@ -30,14 +30,9 @@ function m_play(){
 /**
  * Прога пошла
  */
-
-
-
+//~ Подключимся к серверу
 const socket = io();
 m_log(socket);
-
-
-
 
 const vm = new Vue({
 	el: "#app",
@@ -46,6 +41,11 @@ const vm = new Vue({
 		players: [],
 		my_name: "",
 		bool_name: true,
+
+		
+		m_comp: "comp",
+		m_man: "man",
+		pl_with: "",
 	}
 });
 
@@ -59,30 +59,30 @@ if(v_my_name!==null){
 }
 
 m_log(vm.my_id);
-
+//~ Отправим свое имя
 socket.emit("m_login",vm.my_name);
 
 
 
 
-
+//~ Послушаем, кто в сети?
 socket.on("user_name", function(mess){
 	m_log("socket.on user_name === "+ mess);
+	vm.players.push(mess);
 });
 
+//~ socket.on("message", function(mess){
+	//~ m_log("socket.on message === "+ mess);
+//~ });
 
-socket.on("message", function(mess){
-	m_log("socket.on message === "+ mess);
-});
-
-socket.on("user_id", function(mess){
-	m_log("socket.on user_id === "+ mess);
-	if(vm.my_id===0){
-		vm.my_id=mess;
-	} else {
-		vm.players.push(mess);
-	}
-});
+//~ socket.on("user_id", function(mess){
+	//~ m_log("socket.on user_id === "+ mess);
+	//~ if(vm.my_id===0){
+		//~ vm.my_id=mess;
+	//~ } else {
+		//~ vm.players.push(mess);
+	//~ }
+//~ });
 
 
 function b_name(){

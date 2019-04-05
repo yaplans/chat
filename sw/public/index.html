@@ -48,13 +48,22 @@
 			<h1>Морской бой</h1>
 			<p>С кем будешь играть?</p>
 
+
+<!--
+value="comp"
+value="man"
+-->
 			<div class="m_desc">
 				<div>
-					<input type="radio"  id="customRadio" name="example" value="comp">
+					<input type="radio"  id="customRadio" name="example" 
+						v-model="pl_with" v-bind:value="m_comp"
+					>
 					<label class="" for="customRadio">С компьютером</label>
 				</div>
 				<div>
-					<input type="radio" id="customRadio2" name="example" value="man">
+					<input type="radio" id="customRadio2" name="example" 
+						v-model="pl_with" v-bind:value="m_man"
+					>
 					<label class="" for="customRadio2">С человеком</label>
 				</div>
 			</div> 

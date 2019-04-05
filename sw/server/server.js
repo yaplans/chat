@@ -21,32 +21,38 @@ io.on('connection', function(socket){
 	//~ console.log(socket);
 	// на установленном сокете создаем событие
 	//~ 	socket.emit('message', 'User ' + user + ' connected');
-	io.emit('message', 'User ' + user + ' connected');
-	io.emit('user_id', user);
+
+	//~ io.emit('message', 'User ' + user + ' connected');
+	//~ io.emit('user_id', user);
   
-  socket.on('m_login', function(message){
-	console.log('socket.on m_login === ' + message);
-	io.emit('user_name', message);
-  });
+	//~ Кто там залогинился?
+	socket.on('m_login', function(message){
+		console.log('socket.on m_login === ' + message);
+		//~ Разошлем клиентам
+		//~ io.emit('user_name', message);
+		socket.broadcast.emit('user_name', message);
+	});
   
-  socket.on('message.send', function(message){
-    console.log('socket.on message.send === ' + message);
-    // всем отправим
-    //~ io.emit('message', message);
-    // отправим назад
-    //~ socket.emit('message', message);
-    //~ всем кроме отправителя
-    socket.broadcast.emit('socket.broadcast message', user + ": " + message);
-  }); 
+	//~ socket.on('message.send', function(message){
+		//~ console.log('socket.on message.send === ' + message);
+		// всем отправим
+		//~ io.emit('message', message);
+		// отправим назад
+		//~ socket.emit('message', message);
+		// всем кроме отправителя
+		//~ socket.broadcast.emit('socket.broadcast message', user + ": " + message);
+	//~ }); 
+
   
   socket.on('disconnect', function(message){
     console.log('user disconnected' + message);
   });
 });
 
-io.on('message.send', function(message){
-	console.log('io.on===message.send');
-});
+//~ io.on('message.send', function(message){
+	//~ console.log('io.on===message.send');
+//~ });
+
 
 
 //~ запускаем сервер

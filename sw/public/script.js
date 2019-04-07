@@ -15,16 +15,19 @@ function m_play(){
 	//~ alert("Js!")
 	//~ var id = l_get_id();
 
-	var m_check = document.getElementById("customRadio");
-	var m_check2 = document.getElementById("customRadio2");
-	var m_ret = "";	
-	if(m_check.checked){
-		m_ret = m_check.value;
-	}
-	if(m_check2.checked){
-		m_ret =  m_check2.value;
-	}
-	return alert(m_ret);
+	//~ var m_check = document.getElementById("customRadio");
+	//~ var m_check2 = document.getElementById("customRadio2");
+	//~ var m_ret = "";	
+	//~ if(m_check.checked){
+		//~ m_ret = m_check.value;
+	//~ }
+	//~ if(m_check2.checked){
+		//~ m_ret =  m_check2.value;
+	//~ }
+	//~ return alert(m_ret);
+	
+	viewport();
+	return alert(vm.pl_with);
 }
 
 /**
@@ -43,9 +46,21 @@ const vm = new Vue({
 		bool_name: true,
 
 		
-		m_comp: "comp",
-		m_man: "man",
+		//~ m_comp: "comp",
+		//~ m_man: "man",
+		x: "",
+		y: "",
 		pl_with: "",
+	},
+	methods:{
+		xx: function() {
+			this.x = viewport().width;
+			return;
+		},
+		yy: function() {
+			this.y = viewport().height;
+			return;
+		}
 	}
 });
 
@@ -112,3 +127,15 @@ function l_get_id(){
 }
 
 
+
+
+function viewport() {
+  var e = window, a = 'inner';
+  if (!('innerWidth' in window )) {
+    a = 'client';
+    e = document.documentElement || document.body;
+  }
+  var ret = { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+  //~ return alert(ret.width + ' ' + ret.height);
+  return ret;
+}

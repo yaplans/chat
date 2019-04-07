@@ -50,9 +50,6 @@
 
 
 <!--
-value="comp"
-value="man"
--->
 			<div class="m_desc">
 				<div>
 					<input type="radio"  id="customRadio" name="example" 
@@ -67,14 +64,39 @@ value="man"
 					<label class="" for="customRadio2">С человеком</label>
 				</div>
 			</div> 
+-->
+			
+			<div class="m_desc">
+				<div>
+					<input type="radio"  id="customRadio" 
+						v-model="pl_with" value="m_comp"
+					>
+					<label class="" for="customRadio">С компьютером</label>
+				</div>
+				<div>
+					<input type="radio" id="customRadio2" name="example" 
+						v-model="pl_with" value="m_man"
+					>
+					<label class="" for="customRadio2">С человеком</label>
+				</div>
+			</div> 
+			
+			
 			<button class="btn btn-info" 
 				onclick="m_play()"
 			>Играть!!!</button>
 		</div>
 
-<!--
 <p>Мой id={{ my_id }}</p>
--->
+
+<div id="example">
+<p v-on:click="xx" >x={{ x }}</p>
+
+<p v-on:click="yy" >y={{ y }}</p>
+</div>
+
+
+
 		<p>Кто в сети:</p>
 		<ul>
 		<!--v-bind:class="{'app__list_my': message.whom }"-->

@@ -60,6 +60,10 @@ const vm = new Vue({
 		yy: function() {
 			this.y = viewport().height;
 			return;
+		},
+		play_with: function(x) {
+			alert(x.target.innerHTML);
+			m_log(x.target.title);
 		}
 	}
 });
@@ -82,8 +86,13 @@ socket.emit("m_login",vm.my_name);
 
 //~ Послушаем, кто в сети?
 socket.on("user_name", function(mess){
-	m_log("socket.on user_name === "+ mess);
-	vm.players.push(mess);
+	m_log("socket.on user_name === ");
+	m_log(mess);
+	//~ vm.players.push(mess);
+	vm.players.length=0;//???
+	for(var i=0; i<mess.length; i++){
+		vm.players.push(mess[i]);
+	}
 });
 
 //~ socket.on("message", function(mess){

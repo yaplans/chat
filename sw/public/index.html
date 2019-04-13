@@ -87,6 +87,8 @@
 			>Играть!!!</button>
 		</div>
 
+<!--
+
 <p>Мой id={{ my_id }}</p>
 
 <div id="example">
@@ -95,6 +97,7 @@
 <p v-on:click="yy" >y={{ y }}</p>
 </div>
 
+-->
 
 
 		<p>Кто в сети:</p>
@@ -102,7 +105,9 @@
 		<!--v-bind:class="{'app__list_my': message.whom }"-->
 			<li class="app__list-item"
 				v-for="player in players"
-			>{{ player }}</li>
+				v-on:click="play_with"
+				v-bind:title="player.id"
+			>{{ player.name }}</li>
 		</ul>
 	</div>
 <!--

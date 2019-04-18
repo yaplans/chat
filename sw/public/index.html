@@ -3,16 +3,20 @@
 <head>
 <meta charset="utf-8">
   <title>SW</title>
-<!--
-  <script src="https://unpkg.com/vue"></script>
--->
-<!-- версия для разработки, отображает полезные предупреждения в консоли -->
-<!--
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>  
--->
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!--
+Для модального окна
+-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
 <!--mine-->
 <!--
 <link rel="stylesheet" href="../css/style.css">
@@ -48,28 +52,12 @@
 			<h1>Морской бой</h1>
 			<p>С кем будешь играть?</p>
 
-
-<!--
-			<div class="m_desc">
-				<div>
-					<input type="radio"  id="customRadio" name="example" 
-						v-model="pl_with" v-bind:value="m_comp"
-					>
-					<label class="" for="customRadio">С компьютером</label>
-				</div>
-				<div>
-					<input type="radio" id="customRadio2" name="example" 
-						v-model="pl_with" v-bind:value="m_man"
-					>
-					<label class="" for="customRadio2">С человеком</label>
-				</div>
-			</div> 
--->
 			
 			<div class="m_desc">
 				<div>
 					<input type="radio"  id="customRadio" 
 						v-model="pl_with" value="m_comp"
+						v-on:click="play_with"
 					>
 					<label class="" for="customRadio">С компьютером</label>
 				</div>
@@ -80,36 +68,92 @@
 					<label class="" for="customRadio2">С человеком</label>
 				</div>
 			</div> 
-			
-			
-			<button class="btn btn-info" 
-				onclick="m_play()"
-			>Играть!!!</button>
+
+
+
+			<div v-if="pl_with==='m_comp'">
+<!--
+так не пойдет, т.к. сразу вызывается модаль...
+			<div v-if="play_with()">
+-->
+				<button class="btn btn-info" 
+					onclick="m_play()"
+				>Играть!!!</button>
+			</div>
 		</div>
 
-<!--
 
-<p>Мой id={{ my_id }}</p>
+		<div v-if="pl_with==='m_man'">
+			<p>Кто в сети:</p>
+			<ul id="who_in_net">
+			<!--v-bind:class="{'app__list_my': message.whom }"-->
+				<li class="app__list-item"
+					v-for="player in players"
+					v-on:click="play_with"
+					v-bind:title="player.id"
+				>{{ player.name }}</li>
+			</ul>
+		</div>
 
-<div id="example">
-<p v-on:click="xx" >x={{ x }}</p>
 
-<p v-on:click="yy" >y={{ y }}</p>
-</div>
-
--->
-
-
-		<p>Кто в сети:</p>
-		<ul>
-		<!--v-bind:class="{'app__list_my': message.whom }"-->
-			<li class="app__list-item"
-				v-for="player in players"
-				v-on:click="play_with"
-				v-bind:title="player.id"
-			>{{ player.name }}</li>
-		</ul>
+		
+		
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- Button to Open the Modal -->
+<!--
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Open modal
+</button>
+-->
+		
+		<div>
+			<!-- The Modal -->
+			<div class="modal" id="myModal">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+
+				  <!-- Modal Header -->
+				  <div class="modal-header">
+					<h4 class="modal-title">Modal Heading</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				  </div>
+
+				  <!-- Modal body -->
+				  <div class="modal-body">
+					Modal body..
+				  </div>
+
+				  <!-- Modal footer -->
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				  </div>
+
+				</div>
+			  </div>
+			</div>		
+		</div>
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 <!--
 <script src="http://localhost:8080/api.js"></script>
 -->

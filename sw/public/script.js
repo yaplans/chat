@@ -62,8 +62,23 @@ const vm = new Vue({
 			return;
 		},
 		play_with: function(x) {
-			alert(x.target.innerHTML);
+			//~ alert(x.target.innerHTML);
+			//~ document.getElementById("myModal").modal("show");
+			
+			
+			//~ покажем модаль
+			$("#myModal").modal("show");
+
+			
 			m_log(x.target.title);
+			m_log(x);
+			//~ x.style.color = 'black';
+			document.getElementById("who_in_net").style.color = 'black';
+			
+			
+			x.target.style.color = 'blue';
+			//~ x.target.style.background = 'red';
+			
 		}
 	}
 });

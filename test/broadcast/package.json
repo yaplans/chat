@@ -1,0 +1,15 @@
+{
+  "name": "broadcast",
+  "version": "1.0.0",
+  "description": "Здесь подсмотрел http://qaru.site/questions/431465/send-broadcast-datagram",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node js.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

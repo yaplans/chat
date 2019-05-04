@@ -5,15 +5,19 @@ var MY_IP = "192.168.0.104"
 //
 var MY_ID = "" + Date.now()
 
-
 var dgram = require('dgram');
 var client = dgram.createSocket('udp4');
 
+function start_client(){
 
 // готовим ответы
 client.on('error', (err) => {
   console.log(`client error:\n${err.stack}`);
   client.close();
+});
+
+client.on('close', () => {
+  console.log(`client close`);
 });
 
 client.on('message', (msg, rinfo) => {
@@ -22,16 +26,18 @@ client.on('message', (msg, rinfo) => {
 
 client.on('listening', () => {
   const address = client.address();
-  console.log(`client listening ${address.address}:${address.port}`);
+  console.log(`client start ${address.address}:${address.port}`);
 });
 
-
+/*
 function l_send_request(){
-  var message = new Buffer(MY_ID)
-  client.send(message, 0, message.lenght, PORT, BROADCAST_ADDR, function(){
+//  var message = new Buffer(MY_ID)
+  var message = Buffer.from(MY_ID)
+  client.send(message, 0, message.length, PORT, BROADCAST_ADDR, function(){
     console.log("Send: '" + message + "'")
   })
 }
+*/
 //подготовились ...
 
 // пуляем запросы
@@ -40,16 +46,44 @@ client.bind(function() {
   setInterval(l_send_request,500)
 })
 
-
-
 console.log('Ищем сервер')
+}
 
+function l_send_request(){
+//  var message = new Buffer(MY_ID)
+  var message = Buffer.from(MY_ID)
+  client.send(message, 0, message.length, PORT, BROADCAST_ADDR, function(){
+    console.log("Send: '" + message + "'")
+  })
+}
 
+start_client()
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
-
+function start_server(){
 //Поищем сервер
-//const message = Buffer.from("Hello")
-//const client = dgram.createSocket("udp4")
+const server = dgram.createSocket("udp4")
+
+server.on('listening', function () {
+    var address_ser = server.address();
+    console.log('UDP Server listening on ' + address_ser.address + ":" + address_ser.port);
+// ??? - вроде бы не нужно
+//    server.setBroadcast(true);
+});
+
+server.on('message', (msg, rinfo) => {
+  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  server.send('eee',rinfo.port,rinfo.address)
+});
+
+server.bind(PORT);
+
+}
+
+start_server()
+/*
 
 function l_listen() {
 client.bind(function(){
@@ -76,6 +110,8 @@ client.bind(function(){
 })
 }
 
+*/
+
 /*
 client.on('close',function(){
 // сервер не нашли "Я" - сервер
@@ -83,6 +119,8 @@ client.on('close',function(){
     console.log('Пока')
 })
 */
+
+/*
 function l_log(){
   console.log('Привет')
 }
@@ -90,7 +128,7 @@ function l_close(){
   console.log('l_close')
   client.close()
 }
-
+*/
 
 //setTimeout("alert('Привет')", 2000);
 //setTimeout(l_log, 2000);
@@ -106,18 +144,4 @@ function l_close(){
 //setTimeout(l_close, 14000);
 
 
-/*
 
-client.on('listening', function () {
-    var address = client.address();
-    console.log('UDP Client listening on ' + address.address + ":" + address.port);
-    client.setBroadcast(true);
-});
-
-client.on('message', function (message, rinfo) {
-    console.log('Message from: ' + rinfo.address + ':' + rinfo.port +' - ' + message);
-});
-
-client.bind(PORT);
-
-*/

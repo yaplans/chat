@@ -27,3 +27,52 @@ PS
 чтобы определить "главного" задай ему id = время в секундах
 
 #############################################################
+
+Подключаемся к серверу tcp для игры
+server_ip=""
+start_client_tcp(server_ip)
+{
+если server_ip недоступен запускаем
+find_server(my_ip)
+т.о. продолжаем основной (бесконечный) цикл
+если сервер стартанул - играем
+}
+
+find_server(my_ip)
+{
+start_client_udp(my_ip)
+start_server_udp()
+}
+
+start_client_udp(my_ip)
+{
+отправим широковещательный пакет на PORT
+my_ip, my_id
+}
+
+start_server_udp()
+{
+слушаем на PORT
+получаем адрес, порт и id клиента
+если hi_id < my_id
+  stop_client_udp()
+  //stop_server_udp()
+  server_ip=hi_ip
+  start_client_tcp()
+если hi_id > my_id
+  server_ip=my_ip
+  //stop_server_udp()
+  //stop_client_udp()
+setTimeinit(start_server_tcp,3000)
+}
+
+start_client_tcp(){
+stop_server_tcp()
+
+}
+
+start_server_tcp(){
+stop_client_tcp()
+
+}
+

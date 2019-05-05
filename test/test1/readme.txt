@@ -25,7 +25,7 @@ js.js
 PS
 сервер сидит тихо и слушает PORT (чтобы не "гадить")
 чтобы определить "главного" задай ему id = время в секундах
-
+3
 #############################################################
 
 Подключаемся к серверу tcp для игры
@@ -75,4 +75,37 @@ start_server_tcp(){
 stop_client_tcp()
 
 }
+
+-----------------------------------------
+Node.js, Require и Exports на Хабре
+
+
+start_server_udp()
+server_ip=""
+start_client_udp(server_ip, my_id)
+...
+start_client_udp(p_ip, p_id)
+{
+отправим широковещательный пакет на PORT
+p_ip, p_id
+}
+
+start_server_udp()
+{
+слушаем на PORT
+получаем адрес, порт и id клиента
+если hi_id < my_id
+  stop_client_udp()
+  //stop_server_udp()
+  server_ip=hi_ip
+  start_client_tcp()
+если hi_id > my_id
+  server_ip=my_ip
+  //stop_server_udp()
+  //stop_client_udp()
+???
+setTimeinit(start_server_tcp,3000)
+
+}
+
 

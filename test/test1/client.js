@@ -11,23 +11,23 @@ var client = dgram.createSocket('udp4');
 var start_client = function (){
 
 // готовим ответы
-client.on('error', (err) => {
-  console.log(`client error:\n${err.stack}`);
-  client.close();
-});
+  client.on('error', (err) => {
+    console.log(`client error:\n${err.stack}`);
+    client.close();
+  });
 
-client.on('close', () => {
-  console.log(`client close`);
-});
+  client.on('close', () => {
+    console.log(`client close`);
+  });
 /*
 client.on('message', (msg, rinfo) => {
   console.log(`client got: ${msg} from ${rinfo.address}:${rinfo.port}`);
 });
 */
-client.on('listening', () => {
-  const address = client.address();
-  console.log(`client start ${address.address}:${address.port}`);
-});
+  client.on('listening', () => {
+    const address = client.address();
+    console.log(`client start ${address.address}:${address.port}`);
+  });
 
 /*
 function l_send_request(){
@@ -41,12 +41,12 @@ function l_send_request(){
 //подготовились ...
 
 // пуляем запросы
-client.bind(function() {
-  client.setBroadcast(true)
-  setInterval(l_send_request,500)
-})
+  client.bind(function() {
+    client.setBroadcast(true)
+    setInterval(l_send_request,500)
+  })
 
-console.log('Ищем сервер')
+  console.log('Ищем сервер')
 }
 
 function l_send_request(){

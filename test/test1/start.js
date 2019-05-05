@@ -3,3 +3,7 @@
 var cl = require('./client.js')
 
 cl.start_client()
+
+
+var sv = require('./server.js')
+sv.start_server()

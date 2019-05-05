@@ -19,11 +19,11 @@ client.on('error', (err) => {
 client.on('close', () => {
   console.log(`client close`);
 });
-
+/*
 client.on('message', (msg, rinfo) => {
   console.log(`client got: ${msg} from ${rinfo.address}:${rinfo.port}`);
 });
-
+*/
 client.on('listening', () => {
   const address = client.address();
   console.log(`client start ${address.address}:${address.port}`);
@@ -53,7 +53,8 @@ function l_send_request(){
 //  var message = new Buffer(MY_ID)
   var message = Buffer.from(MY_ID)
   client.send(message, 0, message.length, PORT, BROADCAST_ADDR, function(){
-    console.log("Send: '" + message + "'")
+//    console.log("Send: '" + message + "'")
+    console.log("> '" + message + "'")
   })
 }
 
@@ -74,8 +75,8 @@ server.on('listening', function () {
 });
 
 server.on('message', (msg, rinfo) => {
-  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-  server.send('eee',rinfo.port,rinfo.address)
+  console.log(`< ${msg} from ${rinfo.address}:${rinfo.port}`);
+//  server.send('eee',rinfo.port,rinfo.address)
 });
 
 server.bind(PORT);

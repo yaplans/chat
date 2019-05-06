@@ -29,6 +29,15 @@ function start_server(){
     if( msg < MY_ID ){
       console.log(`${msg} < ${MY_ID}`)
     }
+    if( msg > MY_ID ){
+      console.log(`${msg} > ${MY_ID}`)
+    }
+    if( msg == MY_ID ){
+      console.log(`${msg} == ${MY_ID}`)
+    }
+    if( msg === MY_ID ){
+      console.log(`${msg} === ${MY_ID}`)
+    }
   });
 
   server.bind(PORT);

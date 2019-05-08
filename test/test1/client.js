@@ -5,6 +5,8 @@ var ip = require('./ip.js')
 //var MY_IP = "192.168.0.104"
 var BROADCAST_ADDR = ip.BROADCAST_IP
 var MY_IP = ip.MY_IP
+console.log(MY_IP)
+console.log(BROADCAST_ADDR)
 //
 var MY_ID = "" + Date.now()
 

@@ -23,8 +23,8 @@ network.get_active_interface(function(err, obj) {
     console.log('BROADCAST_IP = '+BROADCAST_IP)
 })
 
-module.exports.BROADCAST_IP = BROADCAST_IP
-module.exports.MY_IP = MY_IP
+module.exports.BROADCAST_IP = my_ip(BROADCAST_IP)
+module.exports.MY_IP = my_ip(MY_IP)
 /**
 * a - биты ip, c - биты маски сети.
 * Возвращает биты широковещвтельного адреса.
@@ -62,3 +62,6 @@ function my_bit_to_ip(p){
   return x
 }
 
+function my_ip(p){
+  return p
+}

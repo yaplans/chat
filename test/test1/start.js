@@ -1,7 +1,7 @@
 //lmport start_client from './client.js'
 
 var cl = require('./client.js')
-cl.start_client()
+//cl.start_client()
 
 
 var sv = require('./server.js')

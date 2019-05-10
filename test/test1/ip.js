@@ -1,16 +1,29 @@
-var MY_IP
-var BROADCAST_IP
+var MY_IP =''
+var BROADCAST_IP =''
 
 var network = require('network')
 var Addres4 = require('ip-address').Address4
 
-network.get_active_interface(function(err, obj) {
+var obj = {}
+var z = network.get_active_interface(function(err, obj) {
   // главный ip (настроенный на шлюз)
-  MY_IP = obj.ip_address
+  console.log(obj)
+  return obj
+//{BROADCAST_IP: BROADCAST_IP, MY_IP: MY_IP}
+})
+
+  console.log(obj)
+
+//  MY_IP = obj.ip_address
+  MY_IP = z.ip_address
 //
-  console.log('       MY_IP = '+MY_IP)
+  console.log(z)
+  console.log(network)
+  console.log(Addres4)
+  console.log('1       MY_IP = '+MY_IP)
   // маска сети
-  var mask_net = obj.netmask
+//  var mask_net = obj.netmask
+  var mask_net = z.netmask
   // строка битов из маски сети
   var x= new Addres4(mask_net).mask()
   // строка битов из ip адреса
@@ -20,11 +33,18 @@ network.get_active_interface(function(err, obj) {
   x=my_bit_broadcast(y,x)
 //    console.log('  hex broad = '+BROADCAST_IP)
   BROADCAST_IP=my_bit_to_ip(x)
-    console.log('BROADCAST_IP = '+BROADCAST_IP)
-})
+    console.log('2 BROADCAST_IP = '+BROADCAST_IP)
+//  return {BROADCAST_IP: BROADCAST_IP, MY_IP: MY_IP}
+//})
 
-module.exports.BROADCAST_IP = my_ip(BROADCAST_IP)
-module.exports.MY_IP = my_ip(MY_IP)
+
+
+
+//module.exports.BROADCAST_IP = my_b_ip
+//(BROADCAST_IP)
+//module.exports.MY_IP = my_ip
+//(MY_IP)
+//module.exports.z = z
 /**
 * a - биты ip, c - биты маски сети.
 * Возвращает биты широковещвтельного адреса.
@@ -62,6 +82,16 @@ function my_bit_to_ip(p){
   return x
 }
 
-function my_ip(p){
-  return p
+/*
+function my_ip(){
+  return MY_IP
 }
+
+function my_b_ip(){
+  return BROADCAST_IP
+}
+*/
+module.exports.BROADCAST_IP = BROADCAST_IP
+//(BROADCAST_IP)
+module.exports.MY_IP = MY_IP
+

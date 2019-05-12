@@ -8,22 +8,22 @@ var obj = {}
 var z = network.get_active_interface(function(err, obj) {
   // главный ip (настроенный на шлюз)
   console.log(obj)
-  return obj
+//  return obj
 //{BROADCAST_IP: BROADCAST_IP, MY_IP: MY_IP}
-})
+//})
 
   console.log(obj)
 
-//  MY_IP = obj.ip_address
-  MY_IP = z.ip_address
+  MY_IP = obj.ip_address
+//  MY_IP = z.ip_address
 //
-  console.log(z)
+//  console.log(z)
   console.log(network)
   console.log(Addres4)
   console.log('1       MY_IP = '+MY_IP)
   // маска сети
-//  var mask_net = obj.netmask
-  var mask_net = z.netmask
+  var mask_net = obj.netmask
+//  var mask_net = z.netmask
   // строка битов из маски сети
   var x= new Addres4(mask_net).mask()
   // строка битов из ip адреса
@@ -95,3 +95,4 @@ module.exports.BROADCAST_IP = BROADCAST_IP
 //(BROADCAST_IP)
 module.exports.MY_IP = MY_IP
 
+})

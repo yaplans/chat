@@ -1,6 +1,9 @@
-//var ip = require('./ip.js')
+var ip = require('./6.js')
 console.log('1')
+console.log(ip)
 
+
+/*
 var z = function(callback){
   console.log('2')
   callback();
@@ -15,7 +18,7 @@ z(function(){
 
 console.log('6')
 console.log(module)
-
+*/
 /*
 x = nt.MY_IP
  console.log('x2')

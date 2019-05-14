@@ -1,5 +1,8 @@
+var ip = require('./ip.js')
 
-function applyForVisa(docs, resolve){
+
+//function applyForVisa(docs, resolve){
+function applyForVisa(ip, resolve){
   console.log('Обработка ...')
   setTimeout(function() {
     let visa = {}

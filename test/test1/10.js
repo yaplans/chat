@@ -1,24 +1,20 @@
-var ip = require('./9.js')
-console.log(ip)
-/*
-var z = function(callback){
-  console.log('2')
-  callback();
-  console.log('3')
+/**
+* Пуст ли объект
+*/
+function isEmpty(arg) {
+  for (var item in arg) {
+    return false;
+  }
+  return true;
 }
 
-console.log('4')
+var ip = require('./9.js')
 
-z(function(){
-  console.log('5')
-});
+var timerId = setInterval(function(){
+  console.log(ip)
+  console.log(isEmpty(ip))
+  if(!isEmpty(ip)){
+    clearInterval(timerId)
+  }
+},10)
 
-console.log('6')
-console.log(module)
-*/
-/*
-x = nt.MY_IP
- console.log('x2')
-console.log(x)
- console.log('x3')
-*/

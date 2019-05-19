@@ -2,6 +2,10 @@ var PORT = 4554;
 // Позже определить программно
 var BROADCAST_ADDR = '192.168.0.255'
 var MY_IP = "192.168.0.104"
+
+
+
+
 //
 var MY_ID = "" + Date.now()
 

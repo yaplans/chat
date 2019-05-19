@@ -6,24 +6,12 @@ var Addres4 = require('ip-address').Address4
 
 network.get_active_interface(function(err, obj) {
 	mmm(obj)
-/*
-  console.log(obj)
-
-  var timerId = setInterval(function(){
-	  if(!isEmpty(obj)){
-	    clearInterval(timerId)
-	    mmm(obj)
-	  }
-	},10)
-	* 
-	* */
 })
 
 function mmm(obj){
-  console.log(obj)
+//  console.log(obj)
 
   MY_IP = obj.ip_address
-  console.log('1        MY_IP = '+MY_IP)
   // маска сети
   var mask_net = obj.netmask
   var x= new Addres4(mask_net).mask()
@@ -32,7 +20,14 @@ function mmm(obj){
 
   x=my_bit_broadcast(y,x)
   BROADCAST_IP=my_bit_to_ip(x)
-    console.log('2 BROADCAST_IP = '+BROADCAST_IP)
+
+//  console.log('1        MY_IP = '+MY_IP)
+//  console.log('2 BROADCAST_IP = '+BROADCAST_IP)
+
+
+module.exports.BROADCAST_IP = BROADCAST_IP
+module.exports.MY_IP = MY_IP
+
 
 }
 
@@ -76,8 +71,10 @@ function my_bit_to_ip(p){
 
 //}
 
-module.exports.BROADCAST_IP = BROADCAST_IP
-module.exports.MY_IP = MY_IP
+
+
+//module.exports.BROADCAST_IP = BROADCAST_IP
+//module.exports.MY_IP = MY_IP
 
 
 

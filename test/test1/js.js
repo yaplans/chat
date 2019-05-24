@@ -114,7 +114,7 @@ server.on('listening', function () {
 server.on('message', (msg, rinfo) => {
   console.log(`< ${msg} from ${rinfo.address}:${rinfo.port}`);
   if(msg<MY_ID){
-	  console.log(`!!! NEW SERVER ID=`+msg);
+	  console.log(`!!! NEW SERVER ID=`+msg+' IP='+rinfo.address);
   }
   
   

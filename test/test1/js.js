@@ -121,6 +121,8 @@ server.on('message', (msg, rinfo) => {
 	  SERVER_ID=msg;
 	  console.log(`!!! STOP SERVER ID=`+MY_ID);
 	  server.close();
+	  console.log(`!!! STOP CLIENT ID=`+MY_ID);
+	  client.close();
   }
 });
 

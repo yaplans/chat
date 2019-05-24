@@ -4,6 +4,8 @@ var PORT = 4554;
 //var MY_IP = "192.168.0.104"
 var BROADCAST_IP = ''
 var MY_IP = ""
+//!!!!
+var SERVER_IP = ""
 
 /**
  * Определяем свой и широковещательный 
@@ -115,11 +117,11 @@ server.on('message', (msg, rinfo) => {
   console.log(`< ${msg} from ${rinfo.address}:${rinfo.port}`);
   if(msg<MY_ID){
 	  console.log(`!!! NEW SERVER ID=`+msg+' IP='+rinfo.address);
+	  SERVER_IP=rinfo.address;
+	  SERVER_ID=msg;
+	  console.log(`!!! STOP SERVER ID=`+MY_ID);
+	  server.close();
   }
-  
-  
-  
-//  server.send('eee',rinfo.port,rinfo.address)
 });
 
 server.bind(PORT);
@@ -186,6 +188,7 @@ function l_close(){
 // Если сервер не нашли "Я" - сервер
 //===================//
 //setTimeout(l_close, 14000);
+
 
 
 

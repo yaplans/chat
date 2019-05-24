@@ -6,7 +6,7 @@ var BROADCAST_IP = ''
 var MY_IP = ""
 //!!!!
 var SERVER_IP = ""
-
+var periodID = 0;
 /**
  * Определяем свой и широковещательный 
  * адреса
@@ -82,7 +82,7 @@ function l_send_request(){
 // пуляем запросы
 client.bind(function() {
   client.setBroadcast(true)
-  setInterval(l_send_request,500)
+  periodID = setInterval(l_send_request,500)
 })
 
 console.log('Ищем сервер')
@@ -122,6 +122,8 @@ server.on('message', (msg, rinfo) => {
 	  console.log(`!!! STOP SERVER ID=`+MY_ID);
 	  server.close();
 	  console.log(`!!! STOP CLIENT ID=`+MY_ID);
+	  
+	  clearInterval(periodID)
 	  client.close();
   }
 });

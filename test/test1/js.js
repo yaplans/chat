@@ -68,17 +68,6 @@ client.on('listening', () => {
   console.log(`client start ${address.address}:${address.port}`);
 });
 
-/*
-function l_send_request(){
-//  var message = new Buffer(MY_ID)
-  var message = Buffer.from(MY_ID)
-  client.send(message, 0, message.length, PORT, BROADCAST_ADDR, function(){
-    console.log("Send: '" + message + "'")
-  })
-}
-*/
-//подготовились ...
-
 // пуляем запросы
 client.bind(function() {
   client.setBroadcast(true)
@@ -92,7 +81,6 @@ function l_send_request(){
 //  var message = new Buffer(MY_ID)
   var message = Buffer.from(MY_ID)
   client.send(message, 0, message.length, PORT, BROADCAST_IP, function(){
-//    console.log("Send: '" + message + "'")
     console.log("> '" + message + "'")
   })
 }
@@ -131,68 +119,6 @@ server.on('message', (msg, rinfo) => {
 server.bind(PORT);
 
 }
-
-//start_server()
-/*
-
-function l_listen() {
-client.bind(function(){
-  client.setBroadcast(true)
-  client.send(message, 3000, "192.168.0.255", err => {
-    if(err) {
-      client.close()
-      throw err
-    }
-  })
-})
-}
-
-
-function l_server() {
-client.bind(function(){
-  client.setBroadcast(true)
-  client.send(message, 3000, "192.168.0.255", err => {
-    if(err) {
-      client.close()
-      throw err
-    }
-  })
-})
-}
-
-*/
-
-/*
-client.on('close',function(){
-// сервер не нашли "Я" - сервер
-
-    console.log('Пока')
-})
-*/
-
-/*
-function l_log(){
-  console.log('Привет')
-}
-function l_close(){
-  console.log('l_close')
-  client.close()
-}
-*/
-
-//setTimeout("alert('Привет')", 2000);
-//setTimeout(l_log, 2000);
-
-
-//===================//
-// Поищем сервер
-//===================//
-//l_listen()
-//===================//
-// Если сервер не нашли "Я" - сервер
-//===================//
-//setTimeout(l_close, 14000);
-
 
 
 

@@ -15,14 +15,13 @@ var periodID = 0;
  * нужную функцию
  * */
 
-function fff(param){
+function l_ip_bc(param){
 
   var ip = require('./api_ip.js')
 
   var timerId = setInterval(function(){
     if(!isEmpty(ip)){
       clearInterval(timerId)
-//    console.log('Ok!')
 	  BROADCAST_IP=ip.BROADCAST_IP
       MY_IP = ip.MY_IP
 	  if(my_debug){
@@ -30,8 +29,6 @@ function fff(param){
 	    console.log(MY_IP)
 	  }
 	  param();
-//	start_client()
-//	start_server()
     }
   },10)
 };
@@ -133,11 +130,11 @@ server.bind(PORT);
 }
 
 function f_server(){
-  fff(start_server);
+  l_ip_bc(start_server);
 }
 
 function f_client(){
-  fff(start_client);
+  l_ip_bc(start_client);
 }
 
 

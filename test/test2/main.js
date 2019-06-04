@@ -10,13 +10,15 @@
 var express = require('express');
 var app = express();
 
-app.use(express.static(__dirname + '/public'));
-//  console.log(__dirname);
-
 //~ это объект будущего сервера
 var http = require('http').Server(app);
 //~ создадим сокет
 var io = require('socket.io')(http);
+
+
+app.use(express.static(__dirname + '/public'));
+//  console.log(__dirname);
+
 
 io.on('connection', function(socket){
 	console.log(socket);

@@ -1,4 +1,10 @@
 /**
+ * main.js
+ * Основной модуль всей программы.
+ * 
+ * */
+
+/**
  * Стартуем веб
  * */
 var express = require('express');
@@ -6,6 +12,18 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'));
 //  console.log(__dirname);
+
+//~ это объект будущего сервера
+var http = require('http').Server(app);
+//~ создадим сокет
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket){
+	console.log(socket);
+});
+
+
+
 
 
 app.listen(3000, function () {

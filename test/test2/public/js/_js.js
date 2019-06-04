@@ -1,5 +1,3 @@
-var my_debug = false;
-//my_debug = true;
 var PORT = 4554;
 // Позже определить программно
 //var BROADCAST_IP = '192.168.0.255'
@@ -11,27 +9,24 @@ var SERVER_IP = ""
 var periodID = 0;
 /**
  * Определяем свой и широковещательный 
- * адреса и ПОСЛЕ этого запускаем
- * нужную функцию
+ * адреса
  * */
 
-function l_ip_bc(param){
+var ip = require('./ip.js')
 
-  var ip = require('./api_ip.js')
-
-  var timerId = setInterval(function(){
-    if(!isEmpty(ip)){
-      clearInterval(timerId)
-	  BROADCAST_IP=ip.BROADCAST_IP
-      MY_IP = ip.MY_IP
-	  if(my_debug){
-  	    console.log(BROADCAST_IP)
-	    console.log(MY_IP)
-	  }
-	  param();
-    }
-  },10)
-};
+var timerId = setInterval(function(){
+  if(!isEmpty(ip)){
+    clearInterval(timerId)
+    console.log('Ok!')
+	BROADCAST_IP=ip.BROADCAST_IP
+	MY_IP = ip.MY_IP
+	console.log(BROADCAST_IP)
+	console.log(MY_IP)
+	
+	start_client()
+	start_server()
+  }
+},10)
 
 /**
 * Пуст ли объект
@@ -86,9 +81,7 @@ function l_send_request(){
 //  var message = new Buffer(MY_ID)
   var message = Buffer.from(MY_ID)
   client.send(message, 0, message.length, PORT, BROADCAST_IP, function(){
-	if(my_debug){
-      console.log("> '" + message + "'")
-	}
+    console.log("> '" + message + "'")
   })
 }
 
@@ -129,23 +122,5 @@ server.bind(PORT);
 
 }
 
-function f_server(){
-  l_ip_bc(start_server);
-}
-
-function f_client(){
-  l_ip_bc(start_client);
-}
 
 
-module.exports.start_server = f_server
-module.exports.start_client = f_client
-module.exports.my_debug = my_debug;
-
-
-module.exports.PORT = PORT;
-module.exports.BROADCAST_IP = BROADCAST_IP;
-module.exports.MY_IP = MY_IP;
-module.exports.SERVER_IP = SERVER_IP;
-
-//## end

@@ -1,25 +1,33 @@
-<!DOCTTYPE html>
+<!DOCTYPE html>
 <htmL>
 	<head>
 	  <meta charset=utf-8>
+<!--
+	   type="text/html"
+-->
 	</head>
 	<body>
 	  <div>
 		<p>Состояние:
-		<span><strong>Ждем...</strong></span>
+		<span id="m_state"><strong>Ждем...</strong></span>
 		</p>
 	  </div>
 	  <div>
 		<p>Действие:
-		<span><strong>Ждем...</strong></span>
+		<span id="m_move"><strong>Ждем...</strong></span>
 		</p>
 	  </div>
 	  <div>
 		  <p>Игрок:
-		  <span><strong>Ждем...</strong></span>
+		  <span id="m_gamer"><strong>Ждем...</strong></span>
 		  </p>
 	  </div>
 	</body>
+	<script type="nosniff" src="socket.io/socket.io.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
+
 <script src="js/script.js"></script>
+<!--
 <script src="js/js.js"></script>
+-->
 </htmL>

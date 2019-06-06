@@ -20,9 +20,21 @@ app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function(socket){
 	console.log("socket connection");
+	// подождем сообщение от подключившегося
+	socket.on('my_mess',function(m_mess){
+		console.log(m_mess);
+		// отправим ему данные поиска сервера
+		var obj_data = {SERVER_IP: get_server_ip.SERVER_IP, MY_IP: get_server_ip.MY_IP};
+		console.log(obj_data);
+		//~ socket.emit('m_server_data', obj_data);
+		socket.emit('m_server_data', get_server_ip.SERVER_IP);
+		
+	});
 });
 
-
+//~ io.emit('message', function(socket){
+	//~ socket.send;
+//~ });
 
 
 

@@ -6,3 +6,12 @@ server.js и index.html для теста
 !? у меня, в main.js не подключается !?
 
 !!! Разберись как подключать !!!
+
+
+!!! Так заработало ???
+//~ app.listen(3000, function () {
+  //~ console.log('Example app listening on port 3000!');
+//~ })
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});

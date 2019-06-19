@@ -1,0 +1,13 @@
+/* подсмотрел здесь https://habr.com/ru/post/275353/ */
+#clock{
+  font-family:Tahoma, sans-serif;
+  font-size:20px;
+  font-weight:bold;
+  color:#0000cc;	
+}
+
+canvas{
+/*
+background: green;
+*/
+}

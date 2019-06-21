@@ -3,6 +3,7 @@
 
 function m_log(str){
 	if(false){
+	//~ if(true){
 		console.log(str);
 	}
 }
@@ -11,7 +12,7 @@ function m_log(str){
 var canvas = document.getElementById('myCanvas');
 var cell_width = canvas.width/9;
 var cell_height = canvas.height/9;
-
+var fon_color="#7F7F7F";
 var color = [
 "red",
 "green",
@@ -19,6 +20,37 @@ var color = [
 "yellow",
 "blue"
 ];
+
+//~ координаты шарика
+//~ var ball_row = [];
+//~ список шариков
+//~ var balls = [];
+//~ for(var i=0;i<9;i++){
+	//~ balls[i]=['','','','','','','','',''];
+//~ }
+
+
+
+//~ var balls = [][];
+//~ for(var j=1;j<10;j++){
+  //~ for(var i=1;i<10;i++){
+	//~ balls[j][i]='';
+	//~ console.log(balls);
+  //~ }
+//~ }
+
+var ball = [];
+
+var balls = [];
+for(var j=1;j<10;j++){
+  for(var i=1;i<10;i++){
+	ball[i]='';
+	//~ console.log(balls);
+  }
+	balls[j]=ball;
+}
+
+
 
 //~ Состояние
 //~ mark - пометили шар
@@ -38,10 +70,11 @@ window.onload = function(){
   window.setInterval(
 		function(){
 	    var d = new Date();
-	    //~ document.getElementById("clock").innerHTML = d.toLocaleTimeString();
-	    m_log("displayCanvas start");	
-	    displayCanvas();
-	    m_log("displayCanvas end!");	
+	    document.getElementById("clock").innerHTML = d.toLocaleTimeString();
+	    //console.log(d);
+	    //~ m_log("displayCanvas start");	
+	    //~ displayCanvas();
+	    //~ m_log("displayCanvas end!");	
 		}
   , 1000);
 }
@@ -53,9 +86,11 @@ function m_ball(color, x, y){
 	var radiusClock=cell_width/3;
 
 //~ перевод из номера в размер
-	var xx = cell_width/2 + (x-1)*cell_width;
+	var xx = cell_width/2 + (x)*cell_width;
 	var yy = cell_height/2 + (y-1)*cell_height;
-	
+	console.log(x+"-"+y);
+	console.log(cell_width+"-"+cell_height);
+	console.log(xx+"-"+yy);
 	m_log("m_ball start");
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -90,7 +125,9 @@ function displayMap(){
     var contextHTML = canvasHTML.getContext('2d');
     
     //~ закрасим прямоугольник
-    contextHTML.fillStyle = "#7F7F7F";
+    //~ contextHTML.fillStyle = "#7F7F7F";
+    contextHTML.fillStyle = fon_color;
+    
     contextHTML.fillRect(0,0,canvasHTML.width,canvasHTML.height);
     
     //~ рисуем рамку прямоугольника
@@ -133,27 +170,29 @@ function getPosition(event)
 {
   var x = event.x;
   var y = event.y;
-
-  //~ var canvas = document.getElementById("myCanvas");
-
+//console.log(event);
   x -= canvas.offsetLeft;
   y -= canvas.offsetTop;
 
 //~ округлим в большую сторону
-	var xx = Math.ceil(x/cell_width);
-	var yy = Math.ceil(y/cell_height);
+	var xxx = Math.ceil(x/cell_width);
+	var yyy = Math.ceil(y/cell_height);
 	//~ alert("xx:" + xx + " yy:" + yy);
   //~ alert("x:" + x + " y:" + y);
-  
-  
   //~ return {xx, yy};
 
+if(balls[xxx][yyy]==''){
 	var cc = color[m_rundom()];
-  //~ console.log(m_rundom());
-  //~ console.log(cc);
-  
-		m_ball(cc, xx, yy);
-  
+	m_ball(cc, xxx, yyy);
+    balls[xxx][yyy]=cc;
+	console.log(xxx+'-'+yyy+'-'+"yes");
+}else{
+	m_ball(fon_color, xxx, yyy);
+	balls[xxx][yyy]='';
+	console.log(xxx+'-'+yyy+'-'+"no");
+}
+
+    console.log(balls);
 } 
 
 function m_rundom() {

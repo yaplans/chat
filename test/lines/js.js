@@ -87,10 +87,10 @@ function m_ball(color, x, y){
 
 //~ перевод из номера в размер
 	var xx = cell_width/2 + (x)*cell_width;
-	var yy = cell_height/2 + (y-1)*cell_height;
-	console.log(x+"-"+y);
-	console.log(cell_width+"-"+cell_height);
-	console.log(xx+"-"+yy);
+	var yy = cell_height/2 + (y)*cell_height;
+	//~ console.log(x+"-"+y);
+	//~ console.log(cell_width+"-"+cell_height);
+	//~ console.log(xx+"-"+yy);
 	m_log("m_ball start");
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -175,9 +175,9 @@ function getPosition(event)
   y -= canvas.offsetTop;
 
 //~ округлим в большую сторону
-	var xxx = Math.ceil(x/cell_width);
-	var yyy = Math.ceil(y/cell_height);
-	//~ alert("xx:" + xx + " yy:" + yy);
+	var xxx = Math.ceil(x/cell_width)-1;
+	var yyy = Math.ceil(y/cell_height)-1;
+	alert("xx:" + xxx + " yy:" + yyy);
   //~ alert("x:" + x + " y:" + y);
   //~ return {xx, yy};
 

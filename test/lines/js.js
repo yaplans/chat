@@ -3,7 +3,6 @@
 
 function m_log(str){
 	if(false){
-	//~ if(true){
 		console.log(str);
 	}
 }
@@ -12,7 +11,7 @@ function m_log(str){
 var canvas = document.getElementById('myCanvas');
 var cell_width = canvas.width/9;
 var cell_height = canvas.height/9;
-var fon_color="#7F7F7F";
+
 var color = [
 "red",
 "green",
@@ -21,43 +20,29 @@ var color = [
 "blue"
 ];
 
-//~ координаты шарика
-//~ var ball_row = [];
-//~ список шариков
-//~ var balls = [];
-//~ for(var i=0;i<9;i++){
-	//~ balls[i]=['','','','','','','','',''];
-//~ }
-
-
-
-//~ var balls = [][];
-//~ for(var j=1;j<10;j++){
-  //~ for(var i=1;i<10;i++){
-	//~ balls[j][i]='';
-	//~ console.log(balls);
-  //~ }
-//~ }
-
-var ball = [];
-
-var balls = [];
-for(var j=1;j<10;j++){
-  for(var i=1;i<10;i++){
-	ball[i]='';
-	//~ console.log(balls);
-  }
-	balls[j]=ball;
-}
-
-
-
 //~ Состояние
 //~ mark - пометили шар
 //~ wait - ждем отметки шара
 var state = "wait";
 
 
+
+//~ var ball = [];
+var balls = [];
+
+//~ for(var j=0;j<9;j++){
+	//~ for(var i=0;i<9;i++){
+		//~ balls[i] = '';
+	//~ }
+	//~ balls[j] = ball;
+//~ }
+
+for(var i=0;i<9;i++){
+	balls[i] = ['','','','','','','','',''];
+}
+
+
+console.log(balls);
 
 window.onload = function(){
 	
@@ -70,11 +55,10 @@ window.onload = function(){
   window.setInterval(
 		function(){
 	    var d = new Date();
-	    document.getElementById("clock").innerHTML = d.toLocaleTimeString();
-	    //console.log(d);
-	    //~ m_log("displayCanvas start");	
+	    //~ document.getElementById("clock").innerHTML = d.toLocaleTimeString();
+	    m_log("displayCanvas start");	
 	    //~ displayCanvas();
-	    //~ m_log("displayCanvas end!");	
+	    m_log("displayCanvas end!");	
 		}
   , 1000);
 }
@@ -86,11 +70,12 @@ function m_ball(color, x, y){
 	var radiusClock=cell_width/3;
 
 //~ перевод из номера в размер
+	//~ var xx = cell_width/2 + (x-1)*cell_width;
+	//~ var yy = cell_height/2 + (y-1)*cell_height;
+
 	var xx = cell_width/2 + (x)*cell_width;
 	var yy = cell_height/2 + (y)*cell_height;
-	//~ console.log(x+"-"+y);
-	//~ console.log(cell_width+"-"+cell_height);
-	//~ console.log(xx+"-"+yy);
+	
 	m_log("m_ball start");
     ctx.beginPath();
     ctx.fillStyle = color;
@@ -125,15 +110,17 @@ function displayMap(){
     var contextHTML = canvasHTML.getContext('2d');
     
     //~ закрасим прямоугольник
-    //~ contextHTML.fillStyle = "#7F7F7F";
-    contextHTML.fillStyle = fon_color;
-    
+    contextHTML.fillStyle = "#7F7F7F";
     contextHTML.fillRect(0,0,canvasHTML.width,canvasHTML.height);
+
+
     
     //~ рисуем рамку прямоугольника
     contextHTML.fillStyle = "#000аа0";
     contextHTML.lineWidth = 4;
     contextHTML.strokeRect(0,0,canvasHTML.width, canvasHTML.height);
+
+
 
 	//~ var cell_width = canvasHTML.width/9;
 	//~ var cell_height = canvasHTML.height/9;
@@ -170,29 +157,28 @@ function getPosition(event)
 {
   var x = event.x;
   var y = event.y;
-//console.log(event);
+
+  //~ var canvas = document.getElementById("myCanvas");
+
   x -= canvas.offsetLeft;
   y -= canvas.offsetTop;
 
 //~ округлим в большую сторону
-	var xxx = Math.ceil(x/cell_width)-1;
-	var yyy = Math.ceil(y/cell_height)-1;
-	alert("xx:" + xxx + " yy:" + yyy);
+	var xx = Math.ceil(x/cell_width)-1;
+	var yy = Math.ceil(y/cell_height)-1;
+	//~ alert("xx:" + xx + " yy:" + yy);
   //~ alert("x:" + x + " y:" + y);
+  console.log("xx:" + xx + " yy:" + yy);
+  
   //~ return {xx, yy};
 
-if(balls[xxx][yyy]==''){
 	var cc = color[m_rundom()];
-	m_ball(cc, xxx, yyy);
-    balls[xxx][yyy]=cc;
-	console.log(xxx+'-'+yyy+'-'+"yes");
-}else{
-	m_ball(fon_color, xxx, yyy);
-	balls[xxx][yyy]='';
-	console.log(xxx+'-'+yyy+'-'+"no");
-}
-
-    console.log(balls);
+  //~ console.log(m_rundom());
+  //~ console.log(cc);
+  
+		m_ball(cc, xx, yy);
+		balls[xx][yy]=cc;
+console.log(balls);  
 } 
 
 function m_rundom() {
@@ -205,3 +191,45 @@ function m_rundom() {
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
+
+
+
+function m_hod() {
+	// округлим вниз
+
+	for(var i=0;i<3;i++){
+		var cc = color[m_rundom()];
+		//~ доработать
+		var z = Math.floor(getRandomArbitrary(0, 100) );
+		var n=0;
+		var m=0;
+		var nn=0;
+		var mm=0;
+
+		for(var j=0;j<z;j++){
+			if(balls[n][m]==''){
+				//~ запомним индексы
+				nn=n;
+				mm=m;
+				//~ следующая итерация
+				m++;
+				if(m==9){
+					n++;
+					m=0;
+				}
+				if(n==9){
+					n=0;
+				}
+			}
+		}
+
+
+		m_ball(cc, xx, yy);
+		balls[xx][yy]=cc;
+	}
+	
+	
+}
+
+
+

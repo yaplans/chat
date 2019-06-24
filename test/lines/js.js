@@ -54,9 +54,9 @@ window.onload = function(){
 		function(){
 	    var d = new Date();
 	    //~ document.getElementById("clock").innerHTML = d.toLocaleTimeString();
-	    m_log("displayCanvas start");	
+	    //~ m_log("displayCanvas start");	
 	    //~ displayCanvas();
-	    m_log("displayCanvas end!");	
+	    //~ m_log("displayCanvas end!");	
 	    /**
 	     * Пошла игра
 	     * */
@@ -80,8 +80,8 @@ function m_ball(color, x, y){
 	//~ var xx = cell_width/2 + (x-1)*cell_width;
 	//~ var yy = cell_height/2 + (y-1)*cell_height;
 
-	var xx = cell_width/2 + (x)*cell_width;
-	var yy = cell_height/2 + (y)*cell_height;
+	var xx = cell_width/2 + x*cell_width;
+	var yy = cell_height/2 + y*cell_height;
 	
 	m_log("m_ball start");
     ctx.beginPath();
@@ -92,22 +92,28 @@ function m_ball(color, x, y){
     ctx.fill();
     ctx.closePath();
 	m_log("m_ball end!");
-}
-
-
-
-function displayCanvas(){
 	
-    //~ var canvasHTML = document.getElementById('myCanvas');
-    //~ var contextHTML = canvasHTML.getContext('2d');
-
-		//~ m_ball(contextHTML, "red", 1, 2);
-		m_ball("red", 1, 2);
-
-
-return;
-
+	if(color==map_color){
+		balls[x][y]='';
+	}else{
+		balls[x][y]=color;
+	}
 }
+
+
+
+//~ function displayCanvas(){
+	
+    // var canvasHTML = document.getElementById('myCanvas');
+    // var contextHTML = canvasHTML.getContext('2d');
+
+		// m_ball(contextHTML, "red", 1, 2);
+		//~ m_ball("red", 1, 2);
+
+
+//~ return;
+
+//~ }
 
 
 
@@ -181,13 +187,13 @@ function getPosition(event)
   //~ var y = event.y;
   var x = event.pageX;
   var y = event.pageY;
-console.log("x:" + x + " y:" + y);
+//~ console.log("x:" + x + " y:" + y);
   //~ var canvas = document.getElementById("myCanvas");
 
   x -= canvas.offsetLeft;
   y -= canvas.offsetTop;
 
-console.log("offsetLeft:" + canvas.offsetLeft + " offsetTop:" + canvas.offsetTop);
+//~ console.log("offsetLeft:" + canvas.offsetLeft + " offsetTop:" + canvas.offsetTop);
 
 console.log("x:" + x + " y:" + y);
 
@@ -225,8 +231,13 @@ console.log("x:" + x + " y:" + y);
 						console.log('else state balls');
 						cc = balls[mx][my];
 						m_ball(cc, xx, yy);
+						//~ balls[xx][yy]=cc;
+						
 						log_state('cc:'+cc+' mx:'+mx+' my:'+my,'mark_state');
+						
 						m_ball(map_color, mx, my);
+						//~ balls[mx][my]='';
+						
 						state = "hod";
 						log_state(state,'log_state');
 						//~ console.log(balls);  
@@ -238,7 +249,7 @@ console.log("x:" + x + " y:" + y);
   
 		//~ m_ball(cc, xx, yy);
 		//~ balls[xx][yy]=cc;
-//~ console.log(balls);  
+console.log(balls);  
 } 
 
 function m_rundom() {
@@ -269,6 +280,7 @@ function m_hod() {
 				}
 			}
 	console.log(emptyCells);
+	console.log(n);
 
 	for(var i=0;i<3;i++){
 		var cc = color[m_rundom()];
@@ -276,17 +288,20 @@ function m_hod() {
 		/**
 		 * Теперь координаты
 		 * */
-		var z = Math.floor(getRandomArbitrary(0, n) );
+		var z = Math.floor(getRandomArbitrary(0, emptyCells.length));
 
+		//~ m_ball(cc, emptyCells[z].x, emptyCells[z].y);
 		m_ball(cc, emptyCells[z].x, emptyCells[z].y);
-		balls[emptyCells[z].x][emptyCells[z].y]=cc;
+		//~ balls[emptyCells[z].x][emptyCells[z].y]=cc;
 		//~ var removedItem = fruits.splice(pos, 1); // так можно удалить элемент
 		emptyCells.splice(z, 1); 
-		console.log(i);  
-		console.log(emptyCells);  
+		//~ console.log(i);  
+		//~ console.log(emptyCells);  
 	}
 	state = 'wait';
-	
+	console.log(emptyCells);  
+	console.log(n);
+	console.log(emptyCells.length);  
 }
 
 

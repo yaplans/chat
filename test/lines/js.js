@@ -38,7 +38,7 @@ var balls = [];
 for(var i=0;i<9;i++){
 	balls[i] = ['','','','','','','','',''];
 }
-console.log(balls);
+//~ console.log(balls);
 
 
 
@@ -195,14 +195,14 @@ function getPosition(event)
 
 //~ console.log("offsetLeft:" + canvas.offsetLeft + " offsetTop:" + canvas.offsetTop);
 
-console.log("x:" + x + " y:" + y);
+//~ console.log("x:" + x + " y:" + y);
 
 //~ округлим в большую сторону
 	var xx = Math.ceil(x/cell_width)-1;
 	var yy = Math.ceil(y/cell_height)-1;
 	//~ alert("xx:" + xx + " yy:" + yy);
   //~ alert("x:" + x + " y:" + y);
-  console.log("xx:" + xx + " yy:" + yy);
+  //~ console.log("xx:" + xx + " yy:" + yy);
 
 	var cc = color[m_rundom()];
   //~ console.log(cc);
@@ -211,12 +211,12 @@ console.log("x:" + x + " y:" + y);
 	     * Пошла игра
 	     * */
 	    if(state == "wait"){
-				console.log('state == "wait"');
+				//~ console.log('state == "wait"');
 				if(balls[xx][yy]==''){
-					console.log('ничего не делаем');
+					//~ console.log('ничего не делаем');
 					// ничего не делаем
 				}else{
-					console.log('else balls');
+					//~ console.log('else balls');
 					state = "mark";
 					log_state(state,'log_state');
 					mx = xx;
@@ -224,11 +224,11 @@ console.log("x:" + x + " y:" + y);
 					log_state('mx:'+mx+'my:'+my,'mark_state');
 				}
 			}else{
-				console.log('else state == "wait"');
+				//~ console.log('else state == "wait"');
 				if(state == "mark"){
-					console.log('else state == "mark"');
+					//~ console.log('else state == "mark"');
 					if(balls[xx][yy]==''){
-						console.log('else state balls');
+						//~ console.log('else state balls');
 						cc = balls[mx][my];
 						m_ball(cc, xx, yy);
 						//~ balls[xx][yy]=cc;
@@ -240,16 +240,19 @@ console.log("x:" + x + " y:" + y);
 						
 						state = "hod";
 						log_state(state,'log_state');
+						
+						// проверим
+						is_line();
 						//~ console.log(balls);  
 					}
 					// ничего не делаем
 				}
 			}
-
+	
   
 		//~ m_ball(cc, xx, yy);
 		//~ balls[xx][yy]=cc;
-console.log(balls);  
+//~ console.log(balls);  
 } 
 
 function m_rundom() {
@@ -279,8 +282,8 @@ function m_hod() {
 					}
 				}
 			}
-	console.log(emptyCells);
-	console.log(n);
+	//~ console.log(emptyCells);
+	//~ console.log(n);
 
 	for(var i=0;i<3;i++){
 		var cc = color[m_rundom()];
@@ -297,11 +300,14 @@ function m_hod() {
 		emptyCells.splice(z, 1); 
 		//~ console.log(i);  
 		//~ console.log(emptyCells);  
+		
+		is_line();
+		
 	}
 	state = 'wait';
-	console.log(emptyCells);  
-	console.log(n);
-	console.log(emptyCells.length);  
+	//~ console.log(emptyCells);  
+	//~ console.log(n);
+	//~ console.log(emptyCells.length);  
 }
 
 
@@ -363,4 +369,32 @@ function log_state(st,el){
 	document.getElementById(el).innerHTML = st;
 	
 
+}
+
+var m_is_line=0;
+function is_line(){
+	console.log('++++ is_line ++++'+m_is_line++);
+	return;
+	var burn = [];
+	for(var j=0;j<9;j++){
+		for(var i=0;i<5;i++){
+			
+			if(balls[j][i]!=''){// если пуст
+			//~ }else{
+				while(balls[j][i]==balls[j][i++]){
+					burn.push({x:j,y:i});
+				}
+				console.log(burn);
+				if(burn.length>4){// сжигаем
+					console.log("burn");
+					//~ console.log(burn);
+				}
+				while(burn.length>0){// чистим
+					burn.pop();
+				}
+			}
+			
+		}
+	}
+	
 }

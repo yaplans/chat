@@ -242,7 +242,7 @@ function getPosition(event)
 						log_state(state,'log_state');
 						
 						// проверим
-						is_line();
+						//~ is_line();
 						//~ console.log(balls);  
 					}
 					// ничего не делаем
@@ -301,7 +301,7 @@ function m_hod() {
 		//~ console.log(i);  
 		//~ console.log(emptyCells);  
 		
-		is_line();
+		//~ is_line();
 		
 	}
 	state = 'wait';
@@ -371,10 +371,12 @@ function log_state(st,el){
 
 }
 
+
+/*
 var m_is_line=0;
 function is_line(){
 	console.log('++++ is_line ++++'+m_is_line++);
-	return;
+	//~ return;
 	var burn = [];
 	for(var j=0;j<9;j++){
 		for(var i=0;i<5;i++){
@@ -392,6 +394,56 @@ function is_line(){
 				while(burn.length>0){// чистим
 					burn.pop();
 				}
+			}
+			
+		}
+	}
+	
+}
+*/
+
+function is_line(){
+	//~ console.log('++++ is_line ++++'+m_is_line++);
+	//~ return;
+	
+	// Ищем горизонтальные цепочки
+	var burn = [];
+	
+	for(var j=0;j<9;j++){
+		for(var i=0;i<5;i++){
+			console.log("j = "+j+" i = "+i);
+			console.log(balls[i][j]);
+
+			if(balls[i][j]!=''){// если пуст
+				while(balls[i][j]==balls[i+1][j]){
+					console.log("i = "+i);
+					console.log(balls[i][j]+" == "+balls[i+1][j]);
+					//~ console.log(balls[j][i]==balls[j][i+1] && i<8);
+					burn.push({x:i,y:j});
+					console.log(burn);
+					console.log(burn[0]);
+					console.log(burn[0].x);
+					console.log(burn[0].y);
+					if(++i>7){
+						break;
+					}
+				}
+				console.log(burn);
+
+				if(burn.length>3){// сжигаем
+// если 4 и больше - допишем последнюю пару координат
+					burn.push({x:i,y:j});
+					for(var n=0;n<burn.length;n++){
+						m_ball(map_color, burn[n].x, burn[n].y);
+						balls[burn[n].y][burn[n].x]='';
+					}
+					console.log("burn");
+					//~ console.log(burn);
+				}
+				while(burn.length>0){// чистим
+					burn.pop();
+				}
+				console.log(burn);
 			}
 			
 		}

@@ -24,12 +24,6 @@ var color = [
 "blue"
 ];
 
-//~ Состояние
-//~ mark - пометили шар
-//~ wait - ждем отметки шара
-//~ hod - нужно выкинуть шары
-var state = "hod";
-log_state(state,'log_state');
 
 /**
  * Инициализируем карту
@@ -40,6 +34,14 @@ for(var i=0;i<9;i++){
 }
 //~ console.log(balls);
 
+
+//~ Состояние
+//~ mark - пометили шар
+//~ wait - ждем отметки шара
+//~ hod - нужно выкинуть шары
+
+//~ var state = "hod";
+//~ log_state(state,'log_state');
 
 
 window.onload = function(){
@@ -53,68 +55,46 @@ window.onload = function(){
   window.setInterval(
 		function(){
 	    var d = new Date();
-	    //~ document.getElementById("clock").innerHTML = d.toLocaleTimeString();
-	    //~ m_log("displayCanvas start");	
-	    //~ displayCanvas();
-	    //~ m_log("displayCanvas end!");	
-	    /**
-	     * Пошла игра
-	     * */
-	    if(state == "hod"){
-				m_hod();
-				state = "wait";
-				log_state(state,'log_state');
-			}
-	    
+	    document.getElementById("clock").innerHTML = d.toLocaleTimeString();
 		}
   , 1000);
+  
+  
+m_hod();
+  
+  
 }
 
-
+/**
+ * Рисуем круг ывета color по координатам x, y
+ * */
 function m_ball(color, x, y){
 
 	var ctx = canvas.getContext('2d');
 	var radiusClock=cell_width/3;
 
 //~ перевод из номера в размер
-	//~ var xx = cell_width/2 + (x-1)*cell_width;
-	//~ var yy = cell_height/2 + (y-1)*cell_height;
 
 	var xx = cell_width/2 + x*cell_width;
 	var yy = cell_height/2 + y*cell_height;
 	
 	m_log("m_ball start");
     ctx.beginPath();
-    ctx.fillStyle = color;
-    ctx.arc(xx, yy, radiusClock, 0, 2*Math.PI);
-    ctx.moveTo(xx, yy);
-    //~ ctx.stroke();
-    ctx.fill();
+		 ctx.fillStyle = color;
+		 ctx.arc(xx, yy, radiusClock, 0, 2*Math.PI);
+		 ctx.moveTo(xx, yy);
+		 //~ ctx.stroke();
+		 ctx.fill();
     ctx.closePath();
 	m_log("m_ball end!");
 	
 	if(color==map_color){
 		balls[x][y]='';
 	}else{
+		console.log(balls[x][y]);
 		balls[x][y]=color;
 	}
 }
-
-
-
-//~ function displayCanvas(){
-	
-    // var canvasHTML = document.getElementById('myCanvas');
-    // var contextHTML = canvasHTML.getContext('2d');
-
-		// m_ball(contextHTML, "red", 1, 2);
-		//~ m_ball("red", 1, 2);
-
-
-//~ return;
-
-//~ }
-
 
 
 function displayMap(){
@@ -236,14 +216,19 @@ function getPosition(event)
 						log_state('cc:'+cc+' mx:'+mx+' my:'+my,'mark_state');
 						
 						m_ball(map_color, mx, my);
-						//~ balls[mx][my]='';
-						
-						state = "hod";
-						log_state(state,'log_state');
 						
 						// проверим
-						is_line();
+						if(!is_line()){
+							m_hod();
+						}
+						
+						
 						//~ console.log(balls);  
+					}else{
+					//~ if(balls[xx][yy]==''){
+						mx = xx;
+						my = yy;
+						log_state('mx:'+mx+'my:'+my,'mark_state');
 					}
 					// ничего не делаем
 				}
@@ -308,99 +293,19 @@ function m_hod() {
 	//~ console.log(emptyCells);  
 	//~ console.log(n);
 	//~ console.log(emptyCells.length);  
+	
+	//~ state = "wait";
+	log_state(state,'log_state');
+	
+	
 }
-
-
-
-//~ function m_hod() {
-
-	//~ for(var i=0;i<3;i++){
-		//~ var cc = color[m_rundom()];
-		// доработать
-		//~ var z = Math.floor(getRandomArbitrary(0, 100) );
-		//~ var n=0;
-		//~ var m=0;
-		//~ var nn=0;
-		//~ var mm=0;
-
-		//~ for(var j=0;j<z;j++){
-			//~ if(balls[n][m]==''){
-				// запомним индексы
-				//~ nn=n;
-				//~ mm=m;
-				// следующая итерация
-				//~ m++;
-				//~ if(m==9){
-					//~ n++;
-					//~ m=0;
-				//~ }
-				//~ if(n==9){
-					//~ n=0;
-				//~ }
-			//~ }
-		//~ }
-
-
-		//~ m_ball(cc, nn, mm);
-		//~ balls[nn][mm]=cc;
-	//~ }
-	
-	
-//~ }
 
 
 
 function log_state(st,el){
-//~ switch(el) {
-  //~ case 'log_state':  // if (x === 'value1')
-    //~ ...
-    //~ [break]
-
-  //~ case 'mark_state':  // if (x === 'value2')
-    //~ ...
-    //~ [break]
-
-  //~ default:
-    //~ ...
-    //~ [break]
-//~ }
-	
-	//~ document.getElementById("log_state").innerHTML = st;
 	document.getElementById(el).innerHTML = st;
-	
-
 }
 
-
-/*
-var m_is_line=0;
-function is_line(){
-	console.log('++++ is_line ++++'+m_is_line++);
-	//~ return;
-	var burn = [];
-	for(var j=0;j<9;j++){
-		for(var i=0;i<5;i++){
-			
-			if(balls[j][i]!=''){// если пуст
-			//~ }else{
-				while(balls[j][i]==balls[j][i++]){
-					burn.push({x:j,y:i});
-				}
-				console.log(burn);
-				if(burn.length>4){// сжигаем
-					console.log("burn");
-					//~ console.log(burn);
-				}
-				while(burn.length>0){// чистим
-					burn.pop();
-				}
-			}
-			
-		}
-	}
-	
-}
-*/
 
 function is_line(){
 	//~ console.log('++++ is_line ++++'+m_is_line++);
@@ -408,45 +313,55 @@ function is_line(){
 	
 	// Ищем горизонтальные цепочки
 	var burn = [];
-	
+	var burned=false;
 	for(var j=0;j<9;j++){
 		for(var i=0;i<5;i++){
-			console.log("j = "+j+" i = "+i);
-			console.log(balls[i][j]);
+			//~ console.log("j = "+j+" i = "+i);
+			//~ console.log(balls[i][j]);
 
 			if(balls[i][j]!=''){// если пуст
 				while(balls[i][j]==balls[i+1][j]){
-					console.log("i = "+i);
-					console.log(balls[i][j]+" == "+balls[i+1][j]);
+					//~ console.log("i = "+i);
+					//~ console.log(balls[i][j]+" == "+balls[i+1][j]);
 					//~ console.log(balls[j][i]==balls[j][i+1] && i<8);
 					burn.push({x:i,y:j});
-					console.log(burn);
-					console.log(burn[0]);
-					console.log(burn[0].x);
-					console.log(burn[0].y);
+					//~ console.log(burn);
+					//~ console.log(burn[0]);
+					//~ console.log(burn[0].x);
+					//~ console.log(burn[0].y);
 					if(++i>7){
 						break;
 					}
 				}
-				console.log(burn);
+				//~ console.log(burn);
 
 				if(burn.length>3){// сжигаем
 // если 4 и больше - допишем последнюю пару координат
+//~ console.log("burn");
+//~ console.log(burn);
 					burn.push({x:i,y:j});
+//~ console.log(burn[burn.length-1]);
 					for(var n=0;n<burn.length;n++){
 						m_ball(map_color, burn[n].x, burn[n].y);
-						balls[burn[n].y][burn[n].x]='';
+						//~ balls[burn[n].y][burn[n].x]='';
+						balls[burn[n].x][burn[n].y]='';
 					}
-					console.log("burn");
+					//~ console.log("burn");
 					//~ console.log(burn);
+					burned=true;
 				}
 				while(burn.length>0){// чистим
 					burn.pop();
 				}
-				console.log(burn);
+				//~ console.log(burn);
+				//~ console.log(balls);
 			}
 			
 		}
 	}
-	
+	return burned;
 }
+
+
+
+

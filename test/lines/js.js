@@ -242,7 +242,7 @@ function getPosition(event)
 						log_state(state,'log_state');
 						
 						// проверим
-						//~ is_line();
+						is_line();
 						//~ console.log(balls);  
 					}
 					// ничего не делаем

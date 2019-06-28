@@ -306,7 +306,7 @@ function log_state(st,el){
 	document.getElementById(el).innerHTML = st;
 }
 
-
+/*
 function is_line(){
 	//~ console.log('++++ is_line ++++'+m_is_line++);
 	//~ return;
@@ -314,54 +314,108 @@ function is_line(){
 	// Ищем горизонтальные цепочки
 	var burn = [];
 	var burned=false;
-	for(var j=0;j<9;j++){
-		for(var i=0;i<5;i++){
-			//~ console.log("j = "+j+" i = "+i);
-			//~ console.log(balls[i][j]);
+	
+	for(var j=0;j<9;j++){// y
+		for(var i=0;i<5;i++){// x если цепочка не началась до середины, то дальше и ходить не нужно...
 
-			if(balls[i][j]!=''){// если пуст
-				while(balls[i][j]==balls[i+1][j]){
-					//~ console.log("i = "+i);
-					//~ console.log(balls[i][j]+" == "+balls[i+1][j]);
-					//~ console.log(balls[j][i]==balls[j][i+1] && i<8);
-					burn.push({x:i,y:j});
-					//~ console.log(burn);
-					//~ console.log(burn[0]);
-					//~ console.log(burn[0].x);
-					//~ console.log(burn[0].y);
-					if(++i>7){
-						break;
+			if(balls[i][j]!=''){// если пуст - пропустим
+				while(balls[i][j]==balls[i+1][j]){ // если соседи одного цвета
+					burn.push({x:i,y:j}); // добавим в массив координату
+					if(++i>7){ // инкремент
+						break; // выходим, если дошли до последнего столбца
 					}
 				}
-				//~ console.log(burn);
-
-				if(burn.length>3){// сжигаем
-// если 4 и больше - допишем последнюю пару координат
-//~ console.log("burn");
-//~ console.log(burn);
-					burn.push({x:i,y:j});
-//~ console.log(burn[burn.length-1]);
+				if(burn.length>3){// если 4 и больше
+					burn.push({x:i,y:j});//допишем последнюю пару координат
 					for(var n=0;n<burn.length;n++){
-						m_ball(map_color, burn[n].x, burn[n].y);
-						//~ balls[burn[n].y][burn[n].x]='';
-						balls[burn[n].x][burn[n].y]='';
+						m_ball(map_color, burn[n].x, burn[n].y);// сжигаем цепочку
 					}
-					//~ console.log("burn");
-					//~ console.log(burn);
-					burned=true;
+					burned=true;// установим флаг
 				}
 				while(burn.length>0){// чистим
 					burn.pop();
 				}
-				//~ console.log(burn);
-				//~ console.log(balls);
 			}
 			
 		}
 	}
-	return burned;
+	return burned;// возвратим флаг
 }
+*/
 
 
+function is_line(){
+	//~ console.log('++++ is_line ++++'+m_is_line++);
+	//~ return;
+	var burn_all = [];
+	var burned=false;
+	
+	// Ищем горизонтальные цепочки
+	var burn = [];
+
+	for(var j=0;j<9;j++){// y
+		for(var i=0;i<5;i++){// x если цепочка не началась до середины, то дальше и ходить не нужно...
+
+			if(balls[i][j]!=''){// если пуст - пропустим
+				while(balls[i][j]==balls[i+1][j]){ // если соседи одного цвета
+					burn.push({x:i,y:j}); // добавим в массив координату
+					if(++i>7){ // инкремент
+						break; // выходим, если дошли до последнего столбца
+					}
+				}
+				if(burn.length>3){// если 4 и больше
+					burn.push({x:i,y:j});//допишем последнюю пару координат
+					for(var n=0;n<burn.length;n++){
+						//~ m_ball(map_color, burn[n].x, burn[n].y);// сжигаем цепочку
+						burn_all.push({x:burn[n].x, y:burn[n].y});// сохраним для будущего удаления
+					}
+					burned=true;// установим флаг
+				}
+				while(burn.length>0){// чистим
+					burn.pop();
+				}
+			}
+			
+		}
+	}
+	
+// Ищем вертикальные цепочки
+	//var 	burn = [];
+
+	for(var j=0;j<9;j++){// x
+		for(var i=0;i<5;i++){// y если цепочка не началась до середины, то дальше и ходить не нужно...
+
+			if(balls[j][i]!=''){// если пуст - пропустим
+				while(balls[j][i]==balls[j][i+1]){ // если соседи одного цвета
+					burn.push({x:j,y:i}); // добавим в массив координату
+					if(++i>7){ // инкремент
+						break; // выходим, если дошли до последнего столбца
+					}
+				}
+				if(burn.length>3){// если 4 и больше
+					burn.push({x:j,y:i});//допишем последнюю пару координат
+					for(var n=0;n<burn.length;n++){
+						//~ m_ball(map_color, burn[n].x, burn[n].y);// сжигаем цепочку
+						burn_all.push({x:burn[n].x, y:burn[n].y});// сохраним для будущего удаления
+					}
+					burned=true;// установим флаг
+				}
+				while(burn.length>0){// чистим
+					burn.pop();
+				}
+			}
+			
+		}
+	}
+	
+	
+	
+	
+	for(var n=0;n<burn_all.length;n++){
+		m_ball(map_color, burn_all[n].x, burn_all[n].y);// сжигаем цепочку
+	}
+
+	return burned;// возвратим флаг
+}
 
 

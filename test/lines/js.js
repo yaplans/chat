@@ -259,11 +259,12 @@ function m_hod() {
 		 * - рандом N
 */
 		 var emptyCells = [];
-		 var n = 0;
+		 //~ var n = 0;
 			for(var j=0;j<9;j++){
 				for(var i=0;i<9;i++){
 					if(balls[j][i] == ''){
-						emptyCells[n++] = {x:j, y:i};
+						//~ emptyCells[n++] = {x:j, y:i};
+						emptyCells.push({x:j, y:i});
 					}
 				}
 			}
@@ -380,7 +381,6 @@ function is_line(){
 	}
 	
 // Ищем вертикальные цепочки
-	//var 	burn = [];
 
 	for(var j=0;j<9;j++){// x
 		for(var i=0;i<5;i++){// y если цепочка не началась до середины, то дальше и ходить не нужно...
@@ -409,13 +409,117 @@ function is_line(){
 	}
 	
 	
+// Ищем диагональные цепочки
+
+	for(var j=0;j<5;j++){// x
+		for(var i=0;i<5;i++){// y если цепочка не началась до середины, то дальше и ходить не нужно...
+
+			if(balls[j][i]!=''){// если пуст - пропустим
+				while(balls[j][i]==balls[j+1][i+1]){ // если соседи одного цвета
+					burn.push({x:j,y:i}); // добавим в массив координату
+					// if(++i>7 || ++j>7){ // инкремент
+					// ++j может и не сработать!!!
+					i++;j++;
+					if(i>7 || j>7){ // инкремент
+						break; // выходим, если дошли до последнего столбца
+					}
+				}
+				if(burn.length>3){// если 4 и больше
+					burn.push({x:j,y:i});//допишем последнюю пару координат
+					for(var n=0;n<burn.length;n++){
+						//~ m_ball(map_color, burn[n].x, burn[n].y);// сжигаем цепочку
+						burn_all.push({x:burn[n].x, y:burn[n].y});// сохраним для будущего удаления
+						
+						//~ m_circle("#000000", burn[n].x, burn[n].y);
+						
+					}
+					burned=true;// установим флаг
+				}
+				while(burn.length>0){// чистим
+					burn.pop();
+				}
+			}
+			
+		}
+	}
+
+
 	
-	
+	// сжигаем цепочку
 	for(var n=0;n<burn_all.length;n++){
-		m_ball(map_color, burn_all[n].x, burn_all[n].y);// сжигаем цепочку
+		m_ball(map_color, burn_all[n].x, burn_all[n].y);
+		//~ m_ball("#ffffff", burn_all[n].x, burn_all[n].y);
+
 	}
 
 	return burned;// возвратим флаг
+}
+
+
+
+
+
+function test_line(){
+var c='';
+	for(var j=0;j<9;j++){// x
+		for(var i=0;i<9;i++){// y если цепочка не началась до середины, то дальше и ходить не нужно...
+
+			c = balls[j][i];
+			if(c==''){
+				c=map_color;
+			}
+			m_ball(c, j, i);
+			
+			
+		}
+	}
+
+}
+function test_line1(){
+	alert("test_line");
+var burn=[];
+	for(var j=0;j<9;j++){// x
+		for(var i=0;i<9;i++){// y если цепочка не началась до середины, то дальше и ходить не нужно...
+
+			if(balls[j][i]=='#ffffff'){
+				//~ m_ball(map_color, burn[n].x, burn[n].y);// сжигаем цепочку
+				m_ball(map_color, j, i);// сжигаем цепочку
+			}
+			
+		}
+	}
+	
+}
+
+
+
+function m_circle(color, x, y){
+
+	var ctx = canvas.getContext('2d');
+	var radiusClock=cell_width/3;
+
+//~ перевод из номера в размер
+
+	var xx = cell_width/2 + x*cell_width;
+	var yy = cell_height/2 + y*cell_height;
+	
+	//~ m_log("m_ball start");
+    ctx.beginPath();
+		 ctx.fillStyle = color;
+		ctx.lineWidth = 4;
+		 ctx.arc(xx, yy, radiusClock, 0, 2*Math.PI);
+		 ctx.moveTo(xx, yy);
+		 ctx.stroke();
+		 //~ ctx.fill();
+    ctx.closePath();
+	//~ m_log("m_ball end!");
+	
+	//~ if(color==map_color){
+		//~ balls[x][y]='';
+	//~ }else{
+		//~ console.log(balls[x][y]);
+		//~ balls[x][y]=color;
+	//~ }
 }
 
 

@@ -24,6 +24,8 @@ var color = [
 "blue"
 ];
 
+var m_score = 0;
+
 
 /**
  * Инициализируем карту
@@ -56,6 +58,7 @@ window.onload = function(){
 		function(){
 	    var d = new Date();
 	    document.getElementById("clock").innerHTML = d.toLocaleTimeString();
+	    document.getElementById("m_score").innerHTML = m_score;
 		}
   , 1000);
   
@@ -409,14 +412,17 @@ function is_line(){
 	}
 	
 	
-// Ищем диагональные цепочки
+// Ищем диагональные цепочки слева направо вниз
 
 	for(var j=0;j<5;j++){// x
 		for(var i=0;i<5;i++){// y если цепочка не началась до середины, то дальше и ходить не нужно...
 
 			if(balls[j][i]!=''){// если пуст - пропустим
+				console.log("слева направо вниз");
+				//~ console.log("j="+j+" i="+i);
 				while(balls[j][i]==balls[j+1][i+1]){ // если соседи одного цвета
 					burn.push({x:j,y:i}); // добавим в массив координату
+					//~ console.log("j="+j+" i="+i);
 					// if(++i>7 || ++j>7){ // инкремент
 					// ++j может и не сработать!!!
 					i++;j++;
@@ -424,11 +430,61 @@ function is_line(){
 						break; // выходим, если дошли до последнего столбца
 					}
 				}
+				//~ console.log("burn1");
+				//~ console.log(burn);
 				if(burn.length>3){// если 4 и больше
 					burn.push({x:j,y:i});//допишем последнюю пару координат
+				//~ console.log("burn2");
+				//~ console.log(burn);
 					for(var n=0;n<burn.length;n++){
 						//~ m_ball(map_color, burn[n].x, burn[n].y);// сжигаем цепочку
 						burn_all.push({x:burn[n].x, y:burn[n].y});// сохраним для будущего удаления
+				//~ console.log("burn3");
+				//~ console.log(burn);
+						
+						//~ m_circle("#000000", burn[n].x, burn[n].y);
+						
+					}
+					burned=true;// установим флаг
+				}
+				while(burn.length>0){// чистим
+					burn.pop();
+				}
+			}
+			
+		}
+	}
+
+
+// Ищем диагональные цепочки справа налево вниз
+
+	for(var j=8;j>3;j--){// x
+		for(var i=0;i<5;i++){// y если цепочка не началась до середины, то дальше и ходить не нужно...
+
+			if(balls[j][i]!=''){// если пуст - пропустим
+				console.log("справа налево вниз");
+				//~ console.log("j="+j+" i="+i);
+				while(balls[j][i]==balls[j-1][i+1]){ // если соседи одного цвета
+					burn.push({x:j,y:i}); // добавим в массив координату
+					//~ console.log("j="+j+" i="+i);
+					// if(++i>7 || ++j>7){ // инкремент
+					// ++j может и не сработать!!!
+					i++;j--;
+					if(i>7 || j<1){ // инкремент
+						break; // выходим, если дошли до последнего столбца
+					}
+				}
+				//~ console.log("burn1");
+				//~ console.log(burn);
+				if(burn.length>3){// если 4 и больше
+					burn.push({x:j,y:i});//допишем последнюю пару координат
+				//~ console.log("burn2");
+				//~ console.log(burn);
+					for(var n=0;n<burn.length;n++){
+						//~ m_ball(map_color, burn[n].x, burn[n].y);// сжигаем цепочку
+						burn_all.push({x:burn[n].x, y:burn[n].y});// сохраним для будущего удаления
+				//~ console.log("burn3");
+				//~ console.log(burn);
 						
 						//~ m_circle("#000000", burn[n].x, burn[n].y);
 						
@@ -449,7 +505,7 @@ function is_line(){
 	for(var n=0;n<burn_all.length;n++){
 		m_ball(map_color, burn_all[n].x, burn_all[n].y);
 		//~ m_ball("#ffffff", burn_all[n].x, burn_all[n].y);
-
+		m_score++;
 	}
 
 	return burned;// возвратим флаг

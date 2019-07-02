@@ -207,17 +207,16 @@ function getPosition(event)
 					log_state('mx:'+mx+'my:'+my,'mark_state');
 				}
 			}else{
-				//~ console.log('else state == "wait"');
 				if(state == "mark"){
-					//~ console.log('else state == "mark"');
 					if(balls[xx][yy]==''){
-						//~ console.log('else state balls');
+						draw_path(xx, yy);
+						// цвет меченного
 						cc = balls[mx][my];
+						// нарисуем в новом месте
 						m_ball(cc, xx, yy);
 						//~ balls[xx][yy]=cc;
-						
-						log_state('cc:'+cc+' mx:'+mx+' my:'+my,'mark_state');
-						
+						//~ log_state('cc:'+cc+' mx:'+mx+' my:'+my,'mark_state');
+						// сотрем на старом месте
 						m_ball(map_color, mx, my);
 						
 						// проверим
@@ -579,3 +578,36 @@ function m_circle(color, x, y){
 }
 
 
+/**
+ * Найдем путь движения шарика
+ * */
+function draw_path(x, y){
+	
+	
+	m_draw(x, y);
+}
+//~ function m_draw(fig, x, y){
+function m_draw(x, y){
+
+	var ctx = canvas.getContext('2d');
+	var radiusClock=cell_width/6;
+
+//~ перевод из номера в размер
+
+	var xx = cell_width/2 + x*cell_width;
+	var yy = cell_height/2 + y*cell_height;
+	
+	m_log("m_ball start");
+    ctx.beginPath();
+		 //~ ctx.fillStyle = color;
+		 ctx.fillStyle = "#000000";
+		 
+		 ctx.arc(xx - cell_width/9, yy - cell_height/6, radiusClock, 0, 2*Math.PI);
+		 ctx.arc(xx + cell_width/9, yy + cell_height/6, radiusClock/2, 0, 2*Math.PI);
+		 //~ ctx.moveTo(xx/3, yy/6);
+		 //~ ctx.stroke();
+		 ctx.fill();
+    ctx.closePath();
+	m_log("m_ball end!");
+	
+}

@@ -582,9 +582,28 @@ function m_circle(color, x, y){
  * Найдем путь движения шарика
  * */
 function draw_path(x, y){
+	//~ console.log("x="+x+" y="+y);
+	//~ console.log("mx="+mx+" my="+my);
+	var iznak = 1;
+	var jznak = 1;
+	if(x<mx){
+		iznak = -1;
+	}
+	if(y<my){
+		jznak = -1;
+	}
+	var i=mx;
+	var j=my;
+		for(;jznak*j<jznak*y;j+=jznak){
+			m_draw(i, j);
+			//~ console.log("i="+i+" j="+j);
+			//~ return;
+		}
+	for(;iznak*i<iznak*x;i+=iznak){
+			m_draw(i, j);
+			//~ console.log("i="+i+" j="+j);
+	}
 	
-	
-	m_draw(x, y);
 }
 //~ function m_draw(fig, x, y){
 function m_draw(x, y){
@@ -599,15 +618,25 @@ function m_draw(x, y){
 	
 	m_log("m_ball start");
     ctx.beginPath();
-		 //~ ctx.fillStyle = color;
 		 ctx.fillStyle = "#000000";
-		 
-		 ctx.arc(xx - cell_width/9, yy - cell_height/6, radiusClock, 0, 2*Math.PI);
-		 ctx.arc(xx + cell_width/9, yy + cell_height/6, radiusClock/2, 0, 2*Math.PI);
-		 //~ ctx.moveTo(xx/3, yy/6);
-		 //~ ctx.stroke();
+
+			// левый след
+		 ctx.arc(xx - cell_width/10, yy - cell_height/4, radiusClock, 0, 2*Math.PI);
+		 ctx.arc(xx - cell_width/6, yy, radiusClock/3*2, 0, 2*Math.PI);
+
 		 ctx.fill();
     ctx.closePath();
+    
+
+    ctx.beginPath();
+		 ctx.fillStyle = "#000000";
+			// правый след
+		 ctx.arc(xx + cell_width/4, yy, radiusClock, 0, 2*Math.PI);
+		 ctx.arc(xx + cell_width/6, yy + cell_height/4, radiusClock/3*2, 0, 2*Math.PI);
+    
+		 ctx.fill();
+    ctx.closePath();
+   
 	m_log("m_ball end!");
 	
 }

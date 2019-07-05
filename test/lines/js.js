@@ -600,6 +600,14 @@ function m_circle(color, x, y){
 	//~ }
 //~ }
 
+
+
+// Массив координат
+var arr = [];
+
+/**
+ * Поиск маршрута
+ * */
 function draw_path(x, y){
 	var iznak = 1;
 	var jznak = 1;
@@ -612,37 +620,41 @@ function draw_path(x, y){
 	var i=mx;
 	var j=my;
 	
-	var arr = [];
-	
 	for(;jznak*j<jznak*y;j+=jznak){
-			arr.push(x:i ; y:j);
+			arr.push({x:i , y:j});
 			//~ m_draw(i, j);
 	}
 	for(;iznak*i<iznak*x;i+=iznak){
-		arr.push(x:i ; y:j);
+		arr.push({x:i , y:j});
 			//~ m_draw(i, j);
 	}
 	
-	
-	
-	
-		setTimeout( function() {
-			var a = arr.shift();
-			if(arr.length>0){
-				setTimeout( function() {
-					
-				},400);
-			}
-			m_draw(a.x, a.y);
-		}, 400);
-
-	
+	m_x();
 	
 }
 
+
+/**
+ * Рисуем следы по координатам из arr
+ * */
+function m_x(){
+	if(arr.length>0){// пока массив не закончился
+		//~ console.log("arr.length = "+arr.length);
+		// Берем очередную координату
+		var a = arr.shift();
+		// рисуем след
+		m_draw(a.x, a.y);
+		// откладываем следующий шаг
+		setTimeout( m_x, 400);
+	}
+}
+
+
 	
 
-
+/**
+ * Рисуем следы в одной клетке
+ * */
 function m_draw(x, y){
 
 	var ctx = canvas.getContext('2d');
@@ -653,38 +665,25 @@ function m_draw(x, y){
 	var xx = cell_width/2 + x*cell_width;
 	var yy = cell_height/2 + y*cell_height;
 	
-	m_log("m_ball start");
+	// Левый след
     ctx.beginPath();
 		 ctx.fillStyle = "#000000";
-
 			// левый след
 		 ctx.arc(xx - cell_width/10, yy - cell_height/4, radiusClock, 0, 2*Math.PI);
 		 ctx.arc(xx - cell_width/6, yy, radiusClock/3*2, 0, 2*Math.PI);
 
 		 ctx.fill();
     ctx.closePath();
-    
 
 
-setTimeout( function() {
-	left_step(xx, yy, ctx, radiusClock);
-}, 500 );
-
-//~ left_step(xx, yy, ctx, radiusClock)
-
-    //~ ctx.beginPath();
-		 //~ ctx.fillStyle = "#000000";
-			//~ // правый след
-		 //~ ctx.arc(xx + cell_width/4, yy, radiusClock, 0, 2*Math.PI);
-		 //~ ctx.arc(xx + cell_width/6, yy + cell_height/4, radiusClock/3*2, 0, 2*Math.PI);
-    
-		 //~ ctx.fill();
-    //~ ctx.closePath();
+	setTimeout( function() {
+		left_step(xx, yy, ctx, radiusClock);
+	}, 500 );
    
-	m_log("m_ball end!");
-	
 }
-
+/**
+ * Правый след
+ * */
 function left_step(xx, yy, ctx, radiusClock){
     ctx.beginPath();
 		 ctx.fillStyle = "#000000";
@@ -694,6 +693,5 @@ function left_step(xx, yy, ctx, radiusClock){
     
 		 ctx.fill();
     ctx.closePath();
-
 }
 

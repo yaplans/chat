@@ -581,9 +581,26 @@ function m_circle(color, x, y){
 /**
  * Найдем путь движения шарика
  * */
+//~ function draw_path(x, y){
+	//~ var iznak = 1;
+	//~ var jznak = 1;
+	//~ if(x<mx){
+		//~ iznak = -1;
+	//~ }
+	//~ if(y<my){
+		//~ jznak = -1;
+	//~ }
+	//~ var i=mx;
+	//~ var j=my;
+	//~ for(;jznak*j<jznak*y;j+=jznak){
+			//~ m_draw(i, j);
+	//~ }
+	//~ for(;iznak*i<iznak*x;i+=iznak){
+			//~ m_draw(i, j);
+	//~ }
+//~ }
+
 function draw_path(x, y){
-	//~ console.log("x="+x+" y="+y);
-	//~ console.log("mx="+mx+" my="+my);
 	var iznak = 1;
 	var jznak = 1;
 	if(x<mx){
@@ -594,18 +611,38 @@ function draw_path(x, y){
 	}
 	var i=mx;
 	var j=my;
-		for(;jznak*j<jznak*y;j+=jznak){
-			m_draw(i, j);
-			//~ console.log("i="+i+" j="+j);
-			//~ return;
-		}
+	
+	var arr = [];
+	
+	for(;jznak*j<jznak*y;j+=jznak){
+			arr.push(x:i ; y:j);
+			//~ m_draw(i, j);
+	}
 	for(;iznak*i<iznak*x;i+=iznak){
-			m_draw(i, j);
-			//~ console.log("i="+i+" j="+j);
+		arr.push(x:i ; y:j);
+			//~ m_draw(i, j);
 	}
 	
+	
+	
+	
+		setTimeout( function() {
+			var a = arr.shift();
+			if(arr.length>0){
+				setTimeout( function() {
+					
+				},400);
+			}
+			m_draw(a.x, a.y);
+		}, 400);
+
+	
+	
 }
-//~ function m_draw(fig, x, y){
+
+	
+
+
 function m_draw(x, y){
 
 	var ctx = canvas.getContext('2d');
@@ -628,6 +665,27 @@ function m_draw(x, y){
     ctx.closePath();
     
 
+
+setTimeout( function() {
+	left_step(xx, yy, ctx, radiusClock);
+}, 500 );
+
+//~ left_step(xx, yy, ctx, radiusClock)
+
+    //~ ctx.beginPath();
+		 //~ ctx.fillStyle = "#000000";
+			//~ // правый след
+		 //~ ctx.arc(xx + cell_width/4, yy, radiusClock, 0, 2*Math.PI);
+		 //~ ctx.arc(xx + cell_width/6, yy + cell_height/4, radiusClock/3*2, 0, 2*Math.PI);
+    
+		 //~ ctx.fill();
+    //~ ctx.closePath();
+   
+	m_log("m_ball end!");
+	
+}
+
+function left_step(xx, yy, ctx, radiusClock){
     ctx.beginPath();
 		 ctx.fillStyle = "#000000";
 			// правый след
@@ -636,7 +694,6 @@ function m_draw(x, y){
     
 		 ctx.fill();
     ctx.closePath();
-   
-	m_log("m_ball end!");
-	
+
 }
+

@@ -214,8 +214,6 @@ function getPosition(event)
 						cc = balls[mx][my];
 						// нарисуем в новом месте
 						m_ball(cc, xx, yy);
-						//~ balls[xx][yy]=cc;
-						//~ log_state('cc:'+cc+' mx:'+mx+' my:'+my,'mark_state');
 						// сотрем на старом месте
 						m_ball(map_color, mx, my);
 						
@@ -629,14 +627,62 @@ function draw_path(x, y){
 			//~ m_draw(i, j);
 	}
 	
-	m_x();
+	arr.shift();
+	
+	//~ m_x();
+	a = 0;
+	stepSide='left';
+	m_xx();
 	
 }
+
+var stepSide = 'left';// Левый или правый шаг
+ 
+/**
+ * Рисуем следы по координатам из arr
+ * */
+var a = 0;
+function m_xx(){
+	if(arr.length>0){// пока массив не закончился
+		//~ console.log("arr.length = "+arr.length);
+		// Берем очередную координату
+		if (stepSide=='left')
+		{
+			if(a != 0){
+				//~ закрасим прямоугольник
+				drawCell(a);
+				//~ console.log(a);
+				//~ cc = balls[mx][my];
+				//~ // нарисуем в новом месте
+				//~ m_ball(cc, a.x, a.y);
+				//~ // сотрем на старом месте
+				//~ m_ball(map_color, a.x, a.y);
+				
+			}
+			a = arr.shift();
+		} 
+		console.log(a);
+		// рисуем след
+		//~ m_draw(a.x, a.y);
+		//~ console.log(stepSide);
+		draw_step(a.x, a.y, stepSide);
+		//~ console.log(stepSide);
+		// откладываем следующий шаг
+		setTimeout( m_xx, 100);
+	} else {
+		if(a != 0){
+			drawCell(a);
+		}
+	}
+}
+
+
 
 
 /**
  * Рисуем следы по координатам из arr
  * */
+/* 
 function m_x(){
 	if(arr.length>0){// пока массив не закончился
 		//~ console.log("arr.length = "+arr.length);
@@ -648,13 +694,14 @@ function m_x(){
 		setTimeout( m_x, 400);
 	}
 }
-
+*/
 
 	
 
 /**
  * Рисуем следы в одной клетке
  * */
+/* 
 function m_draw(x, y){
 
 	var ctx = canvas.getContext('2d');
@@ -681,9 +728,11 @@ function m_draw(x, y){
 	}, 500 );
    
 }
+*/
 /**
  * Правый след
  * */
+/* 
 function left_step(xx, yy, ctx, radiusClock){
     ctx.beginPath();
 		 ctx.fillStyle = "#000000";
@@ -694,4 +743,61 @@ function left_step(xx, yy, ctx, radiusClock){
 		 ctx.fill();
     ctx.closePath();
 }
+*/
 
+/**
+ * след
+ * */
+//~ function draw_step(xx, yy, ctx, radiusClock){
+function draw_step(x, y, side){
+		var ctx = canvas.getContext('2d');
+		var radiusClock=cell_width/6;
+
+//~ перевод из номера в размер
+
+	var xx = cell_width/2 + x*cell_width;
+	var yy = cell_height/2 + y*cell_height;
+
+
+    ctx.beginPath();
+		 ctx.fillStyle = "#000000";
+		 switch (side)
+		 {
+			 case 'left':
+				// левый след
+				ctx.arc(xx - cell_width/10, yy - cell_height/4, radiusClock, 0, 2*Math.PI);
+				ctx.arc(xx - cell_width/6, yy, radiusClock/3*2, 0, 2*Math.PI);
+				stepSide = 'right';
+				 break;
+			 //~ case 'right':
+				 //~ _
+				 //~ break;
+			 default:
+				// правый след
+				ctx.arc(xx + cell_width/4, yy, radiusClock, 0, 2*Math.PI);
+				ctx.arc(xx + cell_width/6, yy + cell_height/4, radiusClock/3*2, 0, 2*Math.PI);
+				stepSide = 'left';
+		 }
+		 
+    
+		 ctx.fill();
+    ctx.closePath();
+}
+
+
+function drawCell(a){
+		var ctx = canvas.getContext('2d');
+		ctx.fillStyle = map_color;
+		//~ ctx.fillStyle = '#000000';
+//~ перевод из номера в размер
+
+	//~ var xx = cell_width/2 + a.x*cell_width;
+	//~ var yy = cell_height/2 + a.y*cell_height;
+
+	var xx = 2 + a.x*cell_width;
+	var yy = 2 + a.y*cell_height;
+		
+		ctx.fillRect(xx,yy,cell_width - 4, cell_height - 4);
+		
+		//~ ctx.fill();
+}

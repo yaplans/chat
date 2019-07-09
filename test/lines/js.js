@@ -13,9 +13,12 @@ var cell_width = canvas.width/9;
 var cell_height = canvas.height/9;
 
 var map_color = "#7F7F7F";
+
+// координаты предыдущего положения
 // чтобы легче найти ошибку
 var mx = 10;
 var my = 10;
+
 var color = [
 "red",
 "green",
@@ -627,6 +630,7 @@ function draw_path(x, y){
 			//~ m_draw(i, j);
 	}
 	
+	//~ убираем первый элемент
 	arr.shift();
 	
 	//~ m_x();
@@ -661,7 +665,9 @@ function m_xx(){
 			}
 			a = arr.shift();
 		} 
-		console.log(a);
+		//~ console.log(a);
+		
+		
 		// рисуем след
 		//~ m_draw(a.x, a.y);
 		//~ console.log(stepSide);
@@ -677,74 +683,6 @@ function m_xx(){
 }
 
 
-
-
-/**
- * Рисуем следы по координатам из arr
- * */
-/* 
-function m_x(){
-	if(arr.length>0){// пока массив не закончился
-		//~ console.log("arr.length = "+arr.length);
-		// Берем очередную координату
-		var a = arr.shift();
-		// рисуем след
-		m_draw(a.x, a.y);
-		// откладываем следующий шаг
-		setTimeout( m_x, 400);
-	}
-}
-*/
-
-	
-
-/**
- * Рисуем следы в одной клетке
- * */
-/* 
-function m_draw(x, y){
-
-	var ctx = canvas.getContext('2d');
-	var radiusClock=cell_width/6;
-
-//~ перевод из номера в размер
-
-	var xx = cell_width/2 + x*cell_width;
-	var yy = cell_height/2 + y*cell_height;
-	
-	// Левый след
-    ctx.beginPath();
-		 ctx.fillStyle = "#000000";
-			// левый след
-		 ctx.arc(xx - cell_width/10, yy - cell_height/4, radiusClock, 0, 2*Math.PI);
-		 ctx.arc(xx - cell_width/6, yy, radiusClock/3*2, 0, 2*Math.PI);
-
-		 ctx.fill();
-    ctx.closePath();
-
-
-	setTimeout( function() {
-		left_step(xx, yy, ctx, radiusClock);
-	}, 500 );
-   
-}
-*/
-/**
- * Правый след
- * */
-/* 
-function left_step(xx, yy, ctx, radiusClock){
-    ctx.beginPath();
-		 ctx.fillStyle = "#000000";
-			// правый след
-		 ctx.arc(xx + cell_width/4, yy, radiusClock, 0, 2*Math.PI);
-		 ctx.arc(xx + cell_width/6, yy + cell_height/4, radiusClock/3*2, 0, 2*Math.PI);
-    
-		 ctx.fill();
-    ctx.closePath();
-}
-*/
-
 /**
  * след
  * */
@@ -754,10 +692,8 @@ function draw_step(x, y, side){
 		var radiusClock=cell_width/6;
 
 //~ перевод из номера в размер
-
 	var xx = cell_width/2 + x*cell_width;
 	var yy = cell_height/2 + y*cell_height;
-
 
     ctx.beginPath();
 		 ctx.fillStyle = "#000000";
@@ -770,15 +706,12 @@ function draw_step(x, y, side){
 				stepSide = 'right';
 				 break;
 			 //~ case 'right':
-				 //~ _
-				 //~ break;
 			 default:
 				// правый след
 				ctx.arc(xx + cell_width/4, yy, radiusClock, 0, 2*Math.PI);
 				ctx.arc(xx + cell_width/6, yy + cell_height/4, radiusClock/3*2, 0, 2*Math.PI);
 				stepSide = 'left';
 		 }
-		 
     
 		 ctx.fill();
     ctx.closePath();
@@ -798,6 +731,74 @@ function drawCell(a){
 	var yy = 2 + a.y*cell_height;
 		
 		ctx.fillRect(xx,yy,cell_width - 4, cell_height - 4);
+}
+
+var var_x=0;
+var var_y=0;
+function findPath(){
+	//~ console.log(var_x);
+	//~ console.log(var_y);
+	//~ if(var_x==0){
+		//~ var_x=mx;
+		//~ if(var_y==0){
+			//~ var_y=my;
+		//~ }
+		//~ return;
+	//~ }
+
+		var x=1;
+		var y=1;
+	
+
+	var iznak = 1;
+	var jznak = 1;
+	if(x<mx){
+		iznak = -1;
+	}
+	if(y<my){
+		jznak = -1;
+	}
+	var i=mx;
+	var j=my;
+	
+	console.log(i);
+	console.log(j);
+	
+	console.log(x);
+	console.log(y);
 		
-		//~ ctx.fill();
+	
+	for(;jznak*j<jznak*y;j+=jznak){
+		//~ console.log("test jznak   i="+i+" j="+j);
+		
+		//~ m_ball("#ffffff", i, j);
+		if(balls[i][j]!=''){
+			console.log("=== jznak  i="+i+" j="+j);
+			console.log(balls[i][j]);
+			//~ m_ball("#aaaaaa", i, j);
+		}else{
+			//~ m_ball("#ffffff", i, j);
+		}
+			
+		//~ return;
+			arr.push({x:i , y:j});
+			//~ m_draw(i, j);
+			//m_ball("#ffffff", x, y);
+	}
+	for(;iznak*i<iznak*x;i+=iznak){
+		arr.push({x:i , y:j});
+			//~ m_draw(i, j);
+		//~ console.log("test === iznak  i="+i+" j="+j);
+		
+		if(balls[i][j]!=''){
+			console.log("=== iznak  i="+i+" j="+j);
+			console.log(balls[i][j]);
+			//~ m_ball("#aaaaaa", i, j);
+		}else{
+			//~ m_ball("#ffffff", i, j);
+		}
+	}
+	console.log("end");
+//	m_ball("#ffffff", x, y);
+	
 }

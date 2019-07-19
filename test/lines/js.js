@@ -634,7 +634,7 @@ function draw_path(x, y){
 
 
 //~ Найдем путь
-get_arr();
+get_arr(x,y);
 
 
 
@@ -858,10 +858,110 @@ function findPath(){
  * проходим по элементам cellFrom "назад" - заполняем arr
  * 
  * */
-function get_arr(){
-	
-	
-	
-	
+function get_arr(x,y){
+
+var emptyCell = [];
+for(var i=0;i<9;i++){
+	for(var j=0;j<9;j++){
+		if(balls[i][j]==''){
+			emptyCell[i][j]=true;
+		} else {
+			emptyCell[i][j]=false;
+		}
 	}
+}
+	
+//~ var m = [{deep=0,
+		//~ x=mx,
+		//~ y=my,
+		//~ cellFrom=0}];
+
+	//~ for(var i-0;i<4;i++){
+		
+	//~ } 
+
+
+var element = {deep=0,
+		ex=mx,
+		ey=my,
+		cellFrom=0};
+		
+var m = [element];
+
+var xx = element.ex;
+var yy = (element.ey)++;
+
+var res=true;
+
+while(res){
+	// т.о. если все ячейки вокруг текущей заняты - выходим
+	
+Нужно добавить проверку на выход за пределы доски	
+	
+	xx = element.ex;
+	yy = (element.ey)++;
+
+	res=m_func(x,y,xx,yy,element,emptyCell);
+
+	xx = element.ex;
+	yy = (element.ey)--;
+
+	res=m_func(x,y,xx,yy,element,emptyCell);
+
+	xx = (element.ex)++;
+	yy = element.ey;
+
+	res=m_func(x,y,xx,yy,element,emptyCell);
+
+	xx = (element.ex)--;
+	yy = element.ey;
+
+	res=m_func(x,y,xx,yy,element,emptyCell);
+
+}
+//~ var element = {(element.deep)++,
+	//~ ex=xx,
+	//~ ey=yy,
+	//~ cellFrom=element};
+
+//~ if(xx==x && yy==y){
+	//~ element.deep=100;
+	//~ m.push(element);
+//~ } else {
+	//~ if(emptyCell[xx][yy]){
+		//~ emptyCell[xx][yy]=false;
+		//~ m.push(element);
+	//~ } else {
+		
+	//~ }
+//~ }
+
+
+
+	
+}
+
+
+
+function m_func(x,y,xx,yy,element,emptyCell){
+
+	var element_new = {(element.deep)++,
+		ex=xx,
+		ey=yy,
+		cellFrom=element};
+
+	if(xx==x && yy==y){
+		element_new.deep=100;
+	} else {
+		if(!emptyCell[xx][yy]){
+			//~ emptyCell[xx][yy]=false;
+			//~ return element_new;
+		//~ } else {
+			return false;
+		}
+	}
+	emptyCell[xx][yy]=false;
+	return element_new;
+}
+
 

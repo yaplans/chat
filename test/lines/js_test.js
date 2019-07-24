@@ -2,7 +2,8 @@
 // почитай комменты как сделать лучше...
 
 function m_log(str){
-	if(false){
+	if(true){
+	//~ if(false){
 		console.log(str);
 	}
 }
@@ -53,6 +54,9 @@ window.onload = function(){
 	
 	displayMap();	    		
 	//~ отловим клики
+	
+	
+	
 	canvas.addEventListener("mousedown", getPosition, false);
 	
 	
@@ -84,7 +88,7 @@ function m_ball(color, x, y){
 	var xx = cell_width/2 + x*cell_width;
 	var yy = cell_height/2 + y*cell_height;
 	
-	m_log("m_ball start");
+	//~ m_log("m_ball start");
     ctx.beginPath();
 		 ctx.fillStyle = color;
 		 ctx.arc(xx, yy, radiusClock, 0, 2*Math.PI);
@@ -92,15 +96,64 @@ function m_ball(color, x, y){
 		 //~ ctx.stroke();
 		 ctx.fill();
     ctx.closePath();
-	m_log("m_ball end!");
+	//~ m_log("m_ball end!");
 	
 	if(color==map_color){
 		balls[x][y]='';
 	}else{
-		console.log(balls[x][y]);
+		//~ console.log(balls[x][y]);
 		balls[x][y]=color;
 	}
 }
+
+
+/**
+ * Рисуем цифру ывета color по координатам x, y
+ * */
+function m_digit(color, x, y, m_dig){
+
+	var ctx = canvas.getContext('2d');
+	var radiusClock=cell_width/3;
+
+//~ перевод из номера в размер
+
+	var xx = cell_width/2 + x*cell_width;
+	var yy = cell_height/2 + y*cell_height;
+	
+	//~ m_log("m_ball start");
+	
+	//~ ctx.fillStyle = color;
+	ctx.fillStyle = '#000000';
+	ctx.font = "48px serif";
+	m_log("xx-"+xx,' yy='+yy);
+	//~ ctx.fillText("Hello world", xx, yy);
+	ctx.fillText(m_dig, xx, yy);
+	//~ ctx.fillText("Hello world", x, y);
+
+
+	
+    //~ ctx.beginPath();
+		 //~ ctx.fillStyle = color;
+		 //~ ctx.fillText(m_dig, xx, yy);
+		 
+		 //~ ctx.moveTo(xx, yy);
+		 //ctx.stroke();
+		 //~ ctx.fill();
+    //~ ctx.closePath();
+    
+    
+    
+    
+	//~ m_log("m_ball end!");
+	
+	//~ if(color==map_color){
+		//~ balls[x][y]='';
+	//~ }else{
+		//~ console.log(balls[x][y]);
+		//~ balls[x][y]=color;
+	//~ }
+}
+
 
 
 function displayMap(){
@@ -262,18 +315,15 @@ function m_hod() {
 		 * - создадим одномерный массив незаполненых ячеек
 		 * - рандом N
 */
-		 var emptyCells = [];
-		 //~ var n = 0;
-			for(var j=0;j<9;j++){
-				for(var i=0;i<9;i++){
-					if(balls[j][i] == ''){
-						//~ emptyCells[n++] = {x:j, y:i};
-						emptyCells.push({x:j, y:i});
-					}
-				}
+	var emptyCells = [];
+	for(var j=0;j<9;j++){
+		for(var i=0;i<9;i++){
+			if(balls[j][i] == ''){
+				//~ emptyCells[n++] = {x:j, y:i};
+				emptyCells.push({x:j, y:i});
 			}
-	//~ console.log(emptyCells);
-	//~ console.log(n);
+		}
+	}
 
 	for(var i=0;i<3;i++){
 		var cc = color[m_rundom()];
@@ -282,26 +332,11 @@ function m_hod() {
 		 * Теперь координаты
 		 * */
 		var z = Math.floor(getRandomArbitrary(0, emptyCells.length));
-
-		//~ m_ball(cc, emptyCells[z].x, emptyCells[z].y);
 		m_ball(cc, emptyCells[z].x, emptyCells[z].y);
-		//~ balls[emptyCells[z].x][emptyCells[z].y]=cc;
-		//~ var removedItem = fruits.splice(pos, 1); // так можно удалить элемент
 		emptyCells.splice(z, 1); 
-		//~ console.log(i);  
-		//~ console.log(emptyCells);  
-		
-		//~ is_line();
-		
 	}
 	state = 'wait';
-	//~ console.log(emptyCells);  
-	//~ console.log(n);
-	//~ console.log(emptyCells.length);  
-	
-	//~ state = "wait";
 	log_state(state,'log_state');
-	
 	
 }
 
@@ -634,7 +669,7 @@ function draw_path(x, y){
 
 
 //~ Найдем путь
-get_arr(x,y);
+//~ get_arr(x,y);
 
 
 
@@ -758,6 +793,18 @@ function findPath(){
 
 		var x=1;
 		var y=1;
+
+
+get_arr(x,y);
+
+
+
+
+
+console.log('!!!!!!!!!!!!!!!!!');
+
+return;
+
 	
 
 	var iznak = 1;
@@ -861,6 +908,12 @@ function findPath(){
 function get_arr(x,y){
 
 var emptyCell = [];
+
+for(var i=0;i<9;i++){
+	emptyCell[i] = ['','','','','','','','',''];
+}
+
+
 for(var i=0;i<9;i++){
 	for(var j=0;j<9;j++){
 		if(balls[i][j]==''){
@@ -870,6 +923,13 @@ for(var i=0;i<9;i++){
 		}
 	}
 }
+//~ m_log(emptyCell);
+
+
+
+
+
+	
 	
 //~ var m = [{deep=0,
 		//~ x=mx,
@@ -881,43 +941,62 @@ for(var i=0;i<9;i++){
 	//~ } 
 
 
-var element = {deep=0,
-		ex=mx,
-		ey=my,
-		cellFrom=0};
+var element = {deep: 0,
+		ex: mx,
+		ey: my,
+		cellFrom: 0};
 		
 var m = [element];
 
 var xx = element.ex;
-var yy = (element.ey)++;
+var yy = element.ey;
 
 var res=true;
 
 while(res){
 	// т.о. если все ячейки вокруг текущей заняты - выходим
 	
-Нужно добавить проверку на выход за пределы доски	
+//~ Нужно добавить проверку на выход за пределы доски	
+	var rr = m_func(x,y,xx,yy+1,element,emptyCell);
+
+	res = res && rr;
+	m_log('y++');
+	//~ m_log('xx='+xx+' yy='+yy);
+	m_log(rr);
+	m_log(res);
+	m_digit('#000000', rr.ex, rr.ey, rr.deep);
+
+	rr = m_func(x,y,xx,yy-1,element,emptyCell);
+	res = res && rr;
+	//~ res = res && m_func(x,y,xx,yy-1,element,emptyCell);
+	m_log('y--');
+	m_log(rr);
+	//~ m_log('xx='+xx+' yy='+yy);
+	m_log(res);
+	m_digit('#000000', rr.ex, rr.ey, rr.deep);
+
+	//~ xx = (element.ex)++;
+	//~ yy = element.ey;
+
+	rr = m_func(x,y,xx+1,yy,element,emptyCell);
+	res = res && rr;
+	m_log('x++');
+	m_log(rr);
+	//~ m_log('xx='+xx+' yy='+yy);
+	m_log(res);
+	m_digit('#000000', rr.ex, rr.ey, rr.deep);
 	
-	xx = element.ex;
-	yy = (element.ey)++;
+	//~ xx = (element.ex)--;
+	//~ yy = element.ey;
 
-	res = res && m_func(x,y,xx,yy,element,emptyCell);
-
-	xx = element.ex;
-	yy = (element.ey)--;
-
-	res = res && m_func(x,y,xx,yy,element,emptyCell);
-
-	xx = (element.ex)++;
-	yy = element.ey;
-
-	res = res && m_func(x,y,xx,yy,element,emptyCell);
-
-	xx = (element.ex)--;
-	yy = element.ey;
-
-	res = res && m_func(x,y,xx,yy,element,emptyCell);
-
+	rr = m_func(x,y,xx-1,yy,element,emptyCell);
+	res = res && rr;
+	m_log('x--');
+	m_log(rr);
+	//~ m_log('xx='+xx+' yy='+yy);
+	m_log(res);
+	m_digit('#000000', rr.ex, rr.ey, rr.deep);
+return;
 }
 //~ var element = {(element.deep)++,
 	//~ ex=xx,
@@ -953,19 +1032,19 @@ while(res){
  * или false в случае если ячейка занята или за пределами доски
  * */
 function m_func(x,y,xx,yy,element,emptyCell){
+	if(xx>8 || yy>8){// за пределами
+		return false;
+	}
 
-	var element_new = {(element.deep)++,
-		ex=xx,
-		ey=yy,
-		cellFrom=element};
+	var element_new = { deep: element.deep+1,
+		ex: xx,
+		ey: yy,
+		cellFrom: element};
 
 	if(xx==x && yy==y){
 		element_new.deep=100;
 	} else {
-		if(!emptyCell[xx][yy]){
-			//~ emptyCell[xx][yy]=false;
-			//~ return element_new;
-		//~ } else {
+		if(!emptyCell[xx][yy]){//ячейка занята
 			return false;
 		}
 	}

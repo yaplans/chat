@@ -115,21 +115,19 @@ function m_digit(color, x, y, m_dig){
 	var ctx = canvas.getContext('2d');
 	var radiusClock=cell_width/3;
 
+	var m_font= 48;
+
 //~ перевод из номера в размер
 
-	var xx = cell_width/2 + x*cell_width;
-	var yy = cell_height/2 + y*cell_height;
+	var xx = cell_width/2 + x*cell_width - m_font/4;
+	var yy = cell_height/2 + y*cell_height + m_font/3;
 	
-	//~ m_log("m_ball start");
 	
-	//~ ctx.fillStyle = color;
-	ctx.fillStyle = '#000000';
-	ctx.font = "48px serif";
+	ctx.fillStyle = color;
+	//~ ctx.fillStyle = '#000000';
+	ctx.font = m_font+"px serif";
 	m_log("xx-"+xx,' yy='+yy);
-	//~ ctx.fillText("Hello world", xx, yy);
 	ctx.fillText(m_dig, xx, yy);
-	//~ ctx.fillText("Hello world", x, y);
-
 
 	
     //~ ctx.beginPath();

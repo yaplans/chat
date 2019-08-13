@@ -126,7 +126,7 @@ function m_digit(color, x, y, m_dig){
 	ctx.fillStyle = color;
 	//~ ctx.fillStyle = '#000000';
 	ctx.font = m_font+"px serif";
-	m_log("xx-"+xx,' yy='+yy);
+	m_log("xx-"+xx+', yy='+yy);
 	ctx.fillText(m_dig, xx, yy);
 
 	
@@ -924,19 +924,106 @@ for(var i=0;i<9;i++){
 //~ m_log(emptyCell);
 
 
-
-
-
-	
-	
-//~ var m = [{deep=0,
-		//~ x=mx,
-		//~ y=my,
-		//~ cellFrom=0}];
-
-	//~ for(var i-0;i<4;i++){
+var element = {deep: 0,
+		ex: mx,
+		ey: my,
+		cellFrom: 0};
 		
-	//~ } 
+var m = [];
+m.push(element);
+
+var xx = element.ex;
+var yy = element.ey;
+
+var res=true;
+
+var rr = true;
+
+var x_deep=0;
+var m_length=0;
+while(res){
+	//~ пока deep не примет значение 100 после очередной итерации
+	//~ или ни одна ячейка не ...
+	
+	//~ прогоним цикл по нынешней длине массива m 
+	//~ поверим, что push добавляет элементы в конец
+
+	//~ т.к m.length пересчитывается !!!
+	m_length=m.length;
+m_log(m);
+	var flag_end = true;
+	for (i = 0; i < m_length; i++)
+	{
+		m_log('i='+i);
+		if (m[i].deep == x_deep) {
+			m_log(m[i]);
+			m_log('y++');
+			xx=m[i].ex;
+			yy=m[i].ey;
+			rr = m_func(x,y,xx,yy+1,m[i],emptyCell);
+			if (rr) { // если ячейка - добавим в конец массива
+				m.push(rr);
+				m_digit('#000000', rr.ex, rr.ey, rr.deep);
+				flag_end = false;
+			}
+			m_log('y--');
+			rr = m_func(x,y,xx,yy-1,m[i],emptyCell);
+			if (rr) { // если ячейка - добавим в конец массива
+				m.push(rr);
+				m_digit('#000000', rr.ex, rr.ey, rr.deep);
+				flag_end = false;
+			}
+			m_log('x++');
+			rr = m_func(x,y,xx+1,yy,m[i],emptyCell);
+			if (rr) { // если ячейка - добавим в конец массива
+				m.push(rr);
+				m_digit('#000000', rr.ex, rr.ey, rr.deep);
+				flag_end = false;
+			}
+			m_log('x--');
+			rr = m_func(x,y,xx-1,yy,m[i],emptyCell);
+			if (rr) { // если ячейка - добавим в конец массива
+				m.push(rr);
+				m_digit('#000000', rr.ex, rr.ey, rr.deep);
+				flag_end = false;
+			}
+		}
+	}
+	if (flag_end){
+		// т.о. если не было ни одного push - выходим
+		res=false;
+	}
+	//~ проверим следующую итерацию
+	x_deep++;
+m_log('x_deep------------'+x_deep);
+}
+return;	
+}
+
+
+/**
+ * старый вариант
+ * неверный алгаритм
+ * */
+function old_get_arr(x,y){
+
+var emptyCell = [];
+
+for(var i=0;i<9;i++){
+	emptyCell[i] = ['','','','','','','','',''];
+}
+
+
+for(var i=0;i<9;i++){
+	for(var j=0;j<9;j++){
+		if(balls[i][j]==''){
+			emptyCell[i][j]=true;
+		} else {
+			emptyCell[i][j]=false;
+		}
+	}
+}
+//~ m_log(emptyCell);
 
 
 var element = {deep: 0,
@@ -955,6 +1042,7 @@ while(res){
 	// т.о. если все ячейки вокруг текущей заняты - выходим
 	
 //~ Нужно добавить проверку на выход за пределы доски	
+//~ уже добавили см. m_func
 	var rr = m_func(x,y,xx,yy+1,element,emptyCell);
 
 	res = res && rr;
@@ -1021,7 +1109,7 @@ return;
 
 /**
  * x, y - координаты конечной точки
- * xx, yy - координаты очередного положения
+ * xx, yy - координаты (очередного) исследуемого положения
  * element - предыдущий элемент
  * emptyCell - массив пустых мест
  * 
@@ -1042,6 +1130,8 @@ function m_func(x,y,xx,yy,element,emptyCell){
 	if(xx==x && yy==y){
 		element_new.deep=100;
 	} else {
+		m_log(emptyCell);
+		m_log('emptyCell['+xx+']['+yy+']='+emptyCell[xx][yy]);
 		if(!emptyCell[xx][yy]){//ячейка занята
 			return false;
 		}

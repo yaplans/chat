@@ -904,17 +904,13 @@ return;
  * 
  * */
 function get_arr(x,y){
-/**
- * Инициируем массив пустых ячеек emptyCell
- * заполняем его так - если ячейка пуста - true,
- * иначе - false
- * */
- 
+
 var emptyCell = [];
 
 for(var i=0;i<9;i++){
 	emptyCell[i] = ['','','','','','','','',''];
 }
+
 
 for(var i=0;i<9;i++){
 	for(var j=0;j<9;j++){
@@ -925,23 +921,16 @@ for(var i=0;i<9;i++){
 		}
 	}
 }
-// ***********************************************
 //~ m_log(emptyCell);
 
-/**
- * Создаем элемент, описывающий исходную ячейку
- * */
+
 var element = {deep: 0,
 		ex: mx,
 		ey: my,
 		cellFrom: 0};
-/**
- * Создаем массив элементов пути
- * Первый элемент исходный element
- * */		
+		
 var m = [];
 m.push(element);
-// ***********************************************
 
 var xx = element.ex;
 var yy = element.ey;
@@ -949,24 +938,20 @@ var yy = element.ey;
 var res=true;
 
 var rr = true;
-/**
- * текущий шаг удаления - глубина
- * */
+
 var x_deep=0;
-//~ var m_length=0;
+var m_length=0;
 while(res){
 	//~ пока deep не примет значение 100 после очередной итерации
-	//~ или ни одна ячейка не изиенится
-	// т.е. если не было ни одного push - нужно выходить
-	res=false;
+	//~ или ни одна ячейка не ...
 	
 	//~ прогоним цикл по нынешней длине массива m 
 	//~ поверим, что push добавляет элементы в конец
 
 	//~ т.к m.length пересчитывается !!!
-	let m_length=m.length;
+	m_length=m.length;
 m_log(m);
-	let flag_end = false;
+	var flag_end = true;
 	for (i = 0; i < m_length; i++)
 	{
 		m_log('i='+i);
@@ -979,55 +964,39 @@ m_log(m);
 			if (rr) { // если ячейка - добавим в конец массива
 				m.push(rr);
 				m_digit('#000000', rr.ex, rr.ey, rr.deep);
-				if (rr.deep>99){
-					flag_end = true;
-				}
-				res=true;
+				flag_end = false;
 			}
 			m_log('y--');
 			rr = m_func(x,y,xx,yy-1,m[i],emptyCell);
 			if (rr) { // если ячейка - добавим в конец массива
 				m.push(rr);
 				m_digit('#000000', rr.ex, rr.ey, rr.deep);
-				if (rr.deep>99){
-					flag_end = true;
-				}
-				res=true;
+				flag_end = false;
 			}
 			m_log('x++');
 			rr = m_func(x,y,xx+1,yy,m[i],emptyCell);
 			if (rr) { // если ячейка - добавим в конец массива
 				m.push(rr);
 				m_digit('#000000', rr.ex, rr.ey, rr.deep);
-				if (rr.deep>99){
-					flag_end = true;
-				}
-				res=true;
+				flag_end = false;
 			}
 			m_log('x--');
 			rr = m_func(x,y,xx-1,yy,m[i],emptyCell);
 			if (rr) { // если ячейка - добавим в конец массива
 				m.push(rr);
 				m_digit('#000000', rr.ex, rr.ey, rr.deep);
-				m_log('rr.deep='+rr.deep);
-				if (rr.deep>99){
-					flag_end = true;
-				}
-				res=true;
+				flag_end = false;
 			}
 		}
 	}
 	if (flag_end){
-		// т.о. если deep у кого-то стал > 100  - выходим
+		// т.о. если не было ни одного push - выходим
 		res=false;
-		alert("Дошли!");
 	}
-
 	//~ проверим следующую итерацию
 	x_deep++;
 m_log('x_deep------------'+x_deep);
 }
-alert("Путь закрыт!");
 return;	
 }
 
@@ -1149,7 +1118,7 @@ return;
  * или false в случае если ячейка занята или за пределами доски
  * */
 function m_func(x,y,xx,yy,element,emptyCell){
-	if(xx>8 || yy>8 || xx<0 || yy<0){// за пределами
+	if(xx>8 || yy>8){// за пределами
 		return false;
 	}
 

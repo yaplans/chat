@@ -115,7 +115,7 @@ function m_digit(color, x, y, m_dig){
 	var ctx = canvas.getContext('2d');
 	var radiusClock=cell_width/3;
 
-	var m_font= 48;
+	var m_font= 32; // 48
 
 //~ перевод из номера в размер
 
@@ -127,6 +127,15 @@ function m_digit(color, x, y, m_dig){
 	//~ ctx.fillStyle = '#000000';
 	ctx.font = m_font+"px serif";
 	m_log("xx-"+xx+', yy='+yy);
+	// если две цифры
+	if (m_dig>9){
+		xx-=m_font/4;
+	}
+	if (m_dig>99){
+		xx-=m_font/4;
+	}
+	
+	
 	ctx.fillText(m_dig, xx, yy);
 
 	
@@ -793,8 +802,23 @@ function findPath(){
 		var y=1;
 
 
-get_arr(x,y);
+var q_mm = [];
+q_mm = get_arr(x,y);
+m_log(q_mm);
 
+Здесь все норм
+а дальше ошибки...
+
+Нужно нарисовать шаги...
+
+
+mm_xx(q_mm);
+
+//~ while(mm.length>0){	
+	//~ var zzz = mm.pop();
+	//~ m_log(zzz);
+	//~ drawCell(zzz);
+//~ }
 
 
 
@@ -967,8 +991,7 @@ while(res){
 	let m_length=m.length;
 m_log(m);
 	let flag_end = false;
-	for (i = 0; i < m_length; i++)
-	{
+	for (i = 0; i < m_length; i++)	{
 		m_log('i='+i);
 		if (m[i].deep == x_deep) {
 			m_log(m[i]);
@@ -1019,8 +1042,14 @@ m_log(m);
 	}
 	if (flag_end){
 		// т.о. если deep у кого-то стал > 100  - выходим
+		/**
+		 * По идее чтобы минимизировать нужно от первого же найденного
+		 * идти назад, но чтобы код не усложнять сделаем так
+		 * */
+		// 
 		res=false;
 		alert("Дошли!");
+		return get_m_arr(m); // Выходим
 	}
 
 	//~ проверим следующую итерацию
@@ -1029,6 +1058,25 @@ m_log('x_deep------------'+x_deep);
 }
 alert("Путь закрыт!");
 return;	
+}
+
+
+function get_m_arr(m){
+var mm = [];	
+for (let i = 0; i < m.length; i++){
+	if (m[i].deep >= 100) {
+	//~ if (m[i].deep == x_deep) {
+	let res = m[i].cellFrom;
+		while(res != 0){
+			mm.push(res);
+			// Предыдущий
+			res=res.cellFrom;
+		}
+		
+		return mm;	
+	}
+}
+	return -1;// Ошибка...
 }
 
 
@@ -1172,3 +1220,36 @@ function m_func(x,y,xx,yy,element,emptyCell){
 }
 
 
+
+
+//var a = 0;
+function mm_xx(qq_mm){
+	m_log(qq_mm);
+	m_log(qq_mm.length);
+	//~ return;
+
+	if(qq_mm.length>0){// пока массив не закончился
+
+		// Берем очередную координату
+		if (stepSide=='left')
+		{
+			if(a != 0){
+				//~ закрасим прямоугольник
+				
+				
+				
+				//~ drawCell(a);
+			}
+			a = qq_mm.pop();
+			//~ a = mm.shift();			
+		} 
+		draw_step(a.x, a.y, stepSide);
+		setTimeout( mm_xx, 100);
+	} else {
+		if(a != 0){
+			
+			
+			//~ drawCell(a);
+		}
+	}
+}
